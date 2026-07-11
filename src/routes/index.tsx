@@ -31,50 +31,91 @@ function Home() {
     if (!hydrated) return;
     gsap.registerPlugin(ScrollTrigger);
     const ctx = gsap.context(() => {
-      // page load
-      gsap.from("[data-load]", { y: 40, opacity: 0, duration: 1, stagger: 0.08, ease: "power3.out" });
+      // page load (hero content)
+      gsap.from("[data-load]", {
+        y: 30,
+        opacity: 0,
+        duration: 0.9,
+        stagger: 0.08,
+        ease: "power3.out",
+      });
 
-      // pin hero + overlay reveal
+      // Pin hero softly — no scale/opacity change so content is never invisible
       ScrollTrigger.create({
         trigger: heroRef.current,
         start: "top top",
-        end: "+=100%",
+        end: "+=80%",
         pin: true,
         pinSpacing: true,
+        anticipatePin: 1,
       });
+      // Subtle parallax fade on scroll (doesn't fully hide)
       gsap.to(heroRef.current, {
-        scale: 0.9,
-        opacity: 0.4,
+        yPercent: -8,
         ease: "none",
-        scrollTrigger: { trigger: heroRef.current, start: "top top", end: "+=100%", scrub: true },
+        scrollTrigger: {
+          trigger: heroRef.current,
+          start: "top top",
+          end: "+=80%",
+          scrub: true,
+        },
       });
 
-      // section reveals
+      // Section reveals — use fromTo + once so elements never stay hidden
       gsap.utils.toArray<HTMLElement>("[data-reveal]").forEach((el) => {
-        gsap.from(el, {
-          y: 60,
-          opacity: 0,
-          duration: 1,
-          ease: "power3.out",
-          scrollTrigger: { trigger: el, start: "top 85%" },
-        });
+        gsap.fromTo(
+          el,
+          { y: 40, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.9,
+            ease: "power3.out",
+            immediateRender: false,
+            scrollTrigger: {
+              trigger: el,
+              start: "top 90%",
+              once: true,
+            },
+          },
+        );
       });
 
-      // marquee
+      // Marquee
       gsap.to(".marquee-track", { xPercent: -50, duration: 30, ease: "none", repeat: -1 });
 
-      // step cards stagger
-      gsap.from(".step-card", {
-        y: 40,
-        opacity: 0,
-        stagger: 0.06,
-        duration: 0.7,
-        ease: "power3.out",
-        scrollTrigger: { trigger: ".steps-grid", start: "top 80%" },
+      // Step cards stagger
+      gsap.utils.toArray<HTMLElement>(".steps-grid").forEach((grid) => {
+        const cards = grid.querySelectorAll<HTMLElement>(".step-card");
+        gsap.fromTo(
+          cards,
+          { y: 30, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            stagger: 0.06,
+            duration: 0.7,
+            ease: "power3.out",
+            immediateRender: false,
+            scrollTrigger: { trigger: grid, start: "top 90%", once: true },
+          },
+        );
       });
+
+      // Refresh after fonts/images settle so triggers are correct
+      ScrollTrigger.refresh();
+      const onLoad = () => ScrollTrigger.refresh();
+      window.addEventListener("load", onLoad);
+      const t = setTimeout(() => ScrollTrigger.refresh(), 400);
+      return () => {
+        window.removeEventListener("load", onLoad);
+        clearTimeout(t);
+      };
     }, rootRef);
     return () => ctx.revert();
   }, [hydrated]);
+
+
 
   return (
     <div ref={rootRef} className="min-h-screen bg-background">
