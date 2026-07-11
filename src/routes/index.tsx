@@ -4,6 +4,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowRight, ArrowUpRight, MessageCircle, CreditCard, Rocket, CheckCircle2, Sparkles, MousePointerClick, FileCode2 } from "lucide-react";
 import { Nav } from "@/components/Nav";
+import { HeroWave } from "@/components/HeroWave";
 import { Footer } from "@/components/Footer";
 import { PRODUCTS, formatIDR, waLink } from "@/lib/data";
 import { useHydrated } from "@/hooks/useHydrated";
