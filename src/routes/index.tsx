@@ -180,27 +180,130 @@ function Home() {
           </div>
         </div>
 
+        {/* KEUNGGULAN */}
+        <div id="keunggulan" className="relative overflow-hidden" style={{ background: "linear-gradient(135deg, oklch(0.25 0.15 265) 0%, oklch(0.35 0.22 262) 60%, oklch(0.5 0.24 258) 100%)" }}>
+          <div className="mx-auto max-w-7xl px-6 py-24 md:py-32 text-white">
+            <div data-reveal className="grid gap-10 md:grid-cols-[1fr_1.2fr] items-end">
+              <div>
+                <div className="text-[11px] uppercase tracking-[0.25em] text-white/70 font-semibold">Keunggulan</div>
+                <h2 className="mt-3 text-4xl md:text-5xl font-bold tracking-tight leading-tight">
+                  Unleashing the potential <br /> of your <span className="font-serif italic">brand</span>
+                </h2>
+              </div>
+              <p className="text-white/70 max-w-md md:justify-self-end">
+                Dari strategi sampai eksekusi visual — kami merancang solusi yang bekerja, menarik perhatian, dan meninggalkan kesan di hati audiens Anda.
+              </p>
+            </div>
+
+            <div data-reveal className="mt-14 grid gap-5 md:grid-cols-3">
+              {/* Featured white card */}
+              <div className="step-card rounded-3xl bg-white text-foreground p-7 flex flex-col shadow-elegant">
+                <div className="text-[11px] uppercase tracking-widest text-primary font-semibold">01 — Signature</div>
+                <h3 className="mt-3 text-2xl font-bold">Desain & Web Craft</h3>
+                <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
+                  Setiap website kami rancang tidak hanya indah, tapi berorientasi hasil. Interaksi intuitif, grafis menarik, dan konsistensi visual yang membangun kepercayaan brand Anda dari halaman pertama.
+                </p>
+                <div className="mt-auto pt-8 flex items-center justify-between">
+                  <a href="#contact" className="inline-flex items-center gap-2 rounded-full bg-ink text-white px-5 py-3 text-sm font-semibold hover:opacity-90 transition">Mulai project Anda</a>
+                  <a href="#contact" className="grid h-11 w-11 place-items-center rounded-full bg-ink text-white hover:opacity-90 transition" aria-label="Mulai"><ArrowUpRight className="h-4 w-4" /></a>
+                </div>
+              </div>
+              {/* Light blue cards */}
+              {[
+                { n: "02", t: "Strategi Brand", d: "Positioning tajam & narasi yang membedakan Anda dari kompetitor." },
+                { n: "03", t: "Arah Kreatif", d: "Direksi visual dari moodboard hingga sistem desain siap pakai." },
+              ].map((c) => (
+                <div key={c.n} className="step-card rounded-3xl p-7 flex flex-col text-white" style={{ background: "linear-gradient(160deg, oklch(0.72 0.14 258) 0%, oklch(0.6 0.18 260) 100%)" }}>
+                  <div className="text-[11px] uppercase tracking-widest text-white/80 font-semibold">{c.n} — Service</div>
+                  <h3 className="mt-3 text-2xl font-bold">{c.t}</h3>
+                  <p className="mt-3 text-sm text-white/80 leading-relaxed">{c.d}</p>
+                  <div className="mt-auto pt-8 flex items-center justify-between">
+                    <a href="#contact" className="inline-flex items-center gap-2 rounded-full bg-white text-ink px-5 py-3 text-sm font-semibold hover:bg-white/90 transition">Mulai project Anda</a>
+                    <a href="#contact" className="grid h-11 w-11 place-items-center rounded-full bg-white text-ink hover:bg-white/90 transition" aria-label="Mulai"><ArrowRight className="h-4 w-4" /></a>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Perks strip */}
+            <div data-reveal className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {[
+                { n: "2–4h", l: "Waktu pengerjaan" },
+                { n: "120+", l: "Template siap pakai" },
+                { n: "95%", l: "Klien puas & repeat" },
+                { n: "24/7", l: "Support & konsultasi" },
+              ].map((s) => (
+                <div key={s.l} className="rounded-2xl border border-white/15 bg-white/5 backdrop-blur px-6 py-5">
+                  <div className="text-3xl font-bold">{s.n}</div>
+                  <div className="text-xs text-white/70 mt-1 uppercase tracking-widest">{s.l}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
         {/* HOW TO BUY */}
         <div id="how" className="mx-auto max-w-7xl px-6 py-24 md:py-32">
-          <div data-reveal className="max-w-3xl">
-            <div className="text-xs uppercase tracking-widest text-primary font-semibold">Cara Pembelian</div>
-            <h2 className="mt-3 text-4xl md:text-6xl font-bold tracking-tight">
-              Delapan langkah <span className="font-serif">sederhana</span> untuk website Anda.
-            </h2>
+          <div data-reveal className="flex items-end justify-between gap-6 flex-wrap">
+            <div className="max-w-2xl">
+              <div className="text-[11px] uppercase tracking-[0.25em] text-primary font-semibold">Cara Pembelian</div>
+              <h2 className="mt-3 text-4xl md:text-6xl font-bold tracking-tight leading-[1.05]">
+                Delapan langkah <span className="font-serif italic">sederhana</span> untuk website Anda.
+              </h2>
+            </div>
+            <p className="text-muted-foreground max-w-sm">
+              Proses transparan dari pemilihan template sampai project siap live — cukup 2–4 jam pengerjaan.
+            </p>
           </div>
           <div className="steps-grid mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {STEPS.map((s, i) => (
-              <div key={s.title} className="step-card group relative rounded-3xl border bg-card p-6 shadow-card hover:shadow-elegant transition">
-                <div className="flex items-center justify-between">
-                  <div className="grid h-12 w-12 place-items-center rounded-2xl bg-blue-gradient text-white">
-                    <s.icon className="h-5 w-5" />
+            {STEPS.map((s, i) => {
+              const featured = i === 0;
+              const blue = i % 2 === 1;
+              return (
+                <div
+                  key={s.title}
+                  className={`step-card group relative rounded-3xl p-6 flex flex-col min-h-[260px] transition ${
+                    featured
+                      ? "bg-white shadow-elegant"
+                      : blue
+                        ? "text-white shadow-card"
+                        : "bg-white shadow-card border"
+                  }`}
+                  style={blue ? { background: "linear-gradient(160deg, oklch(0.75 0.13 258) 0%, oklch(0.62 0.18 260) 100%)" } : undefined}
+                >
+                  <div className="flex items-center justify-between">
+                    <span className={`text-[11px] uppercase tracking-widest font-semibold ${blue ? "text-white/85" : "text-primary"}`}>
+                      Step {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <div className={`grid h-10 w-10 place-items-center rounded-xl ${blue ? "bg-white/20 text-white" : "bg-secondary text-primary"}`}>
+                      <s.icon className="h-4 w-4" />
+                    </div>
                   </div>
-                  <span className="text-3xl font-serif text-primary/30">{String(i + 1).padStart(2, "0")}</span>
+                  <h3 className={`mt-6 text-xl font-bold leading-tight ${blue ? "text-white" : ""}`}>{s.title}</h3>
+                  {featured && (
+                    <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
+                  )}
+                  {!featured && (
+                    <p className={`mt-2 text-sm leading-relaxed ${blue ? "text-white/80" : "text-muted-foreground"}`}>{s.desc}</p>
+                  )}
+                  <div className="mt-auto pt-6 flex items-center justify-between">
+                    <a
+                      href="#contact"
+                      className={`inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-xs font-semibold transition ${
+                        blue ? "bg-white text-ink hover:bg-white/90" : "bg-ink text-white hover:opacity-90"
+                      }`}
+                    >
+                      Mulai langkah ini
+                    </a>
+                    <div className={`grid h-10 w-10 place-items-center rounded-full transition group-hover:-translate-y-0.5 ${
+                      blue ? "bg-white text-ink" : "bg-ink text-white"
+                    }`}>
+                      <ArrowUpRight className="h-4 w-4" />
+                    </div>
+                  </div>
                 </div>
-                <h3 className="mt-6 text-lg font-bold">{s.title}</h3>
-                <p className="mt-2 text-sm text-muted-foreground">{s.desc}</p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 
