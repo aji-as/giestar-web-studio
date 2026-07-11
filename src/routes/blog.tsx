@@ -3,6 +3,7 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ArrowUpRight } from "lucide-react";
 import { Nav } from "@/components/Nav";
+import { HeroWave } from "@/components/HeroWave";
 import { Footer } from "@/components/Footer";
 import { BLOGS } from "@/lib/data";
 import { useHydrated } from "@/hooks/useHydrated";
@@ -37,15 +38,17 @@ function BlogList() {
     <div ref={rootRef} className="min-h-screen bg-background">
       <Nav />
 
-      <section className="pt-32 pb-12 bg-hero-gradient text-white grain">
-        <div className="mx-auto max-w-7xl px-6">
-          <div data-load className="text-xs uppercase tracking-widest text-primary-glow">Journal</div>
-          <h1 data-load className="mt-3 text-5xl md:text-7xl font-bold tracking-tight text-balance max-w-4xl">
+      <HeroWave>
+        <div className="mx-auto max-w-7xl px-6 pt-32 pb-16">
+          <div data-load className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-[11px] uppercase tracking-[0.2em] backdrop-blur">
+            <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse" /> Journal
+          </div>
+          <h1 data-load className="mt-5 text-5xl md:text-7xl font-bold tracking-tight text-balance max-w-4xl leading-[0.95]">
             Catatan tentang <span className="font-serif italic">craft</span>, teknologi, dan UI.
           </h1>
           <p data-load className="mt-5 text-white/70 max-w-xl">Insight dari tim Giestar seputar desain, kode, dan strategi membangun web modern.</p>
         </div>
-      </section>
+      </HeroWave>
 
       <section className="mx-auto max-w-7xl px-6 py-16">
         <Link to="/blog/$slug" params={{ slug: featured.slug }} className="blog-card group grid md:grid-cols-2 gap-8 rounded-3xl border bg-card overflow-hidden shadow-card hover:shadow-elegant transition">
