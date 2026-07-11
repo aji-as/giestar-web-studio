@@ -148,7 +148,7 @@ function Home() {
       {/* HERO — pinned, layered blue waves */}
       <div ref={heroRef} className="relative h-screen w-full">
         <HeroWave height="screen">
-          <div className="mx-auto flex h-full max-w-7xl flex-col justify-end px-6 pb-16 pt-28">
+          <div data-hero-inner className="mx-auto flex h-full max-w-7xl flex-col justify-end px-6 pb-16 pt-28">
             <div className="grid gap-8 md:grid-cols-[1.4fr_1fr] items-end">
               <div>
                 <div data-load className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-[11px] uppercase tracking-[0.2em] backdrop-blur">
