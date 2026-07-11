@@ -80,41 +80,60 @@ function Home() {
     <div ref={rootRef} className="min-h-screen bg-background">
       <Nav dark />
 
-      {/* HERO — pinned */}
-      <section ref={heroRef} className="relative h-screen w-full overflow-hidden bg-hero-gradient text-white grain">
-        <div className="absolute inset-0 opacity-40" style={{ background: "radial-gradient(circle at 80% 30%, oklch(0.7 0.25 260) 0%, transparent 40%)" }} />
-        <div className="relative z-10 mx-auto flex h-full max-w-7xl flex-col justify-center px-6 pt-20">
-          <div className="max-w-4xl">
-            <div data-load className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs uppercase tracking-widest backdrop-blur">
-              <span className="h-1.5 w-1.5 rounded-full bg-primary-glow animate-pulse" /> Agency Web & Template Marketplace
-            </div>
-            <h1 data-load className="text-balance text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-[0.95] tracking-tight">
-              Bigger, Bolder <br />
-              and <span className="font-serif text-primary-glow">Better</span> websites.
-            </h1>
-            <p data-load className="mt-6 max-w-2xl text-base sm:text-lg text-white/70">
-              Giestar meracik template premium dan project custom untuk brand yang ingin tampil beda. Dari landing sederhana sampai marketplace kompleks.
-            </p>
-            <div data-load className="mt-8 flex flex-wrap gap-3">
-              <Link to="/product" className="inline-flex items-center gap-2 rounded-full bg-white text-ink px-6 py-3 font-semibold hover:bg-white/90 transition">
-                Lihat Katalog <ArrowRight className="h-4 w-4" />
-              </Link>
-              <a href="#how" className="inline-flex items-center gap-2 rounded-full border border-white/30 px-6 py-3 font-semibold hover:bg-white/10 transition">
-                Cara Pembelian
-              </a>
-            </div>
-          </div>
-          <div data-load className="mt-16 grid grid-cols-2 sm:grid-cols-4 gap-6 max-w-3xl border-t border-white/15 pt-8">
-            {[["120+", "Template siap"], ["95%", "Klien puas"], ["2–4h", "Waktu kirim"], ["24/7", "Support"]].map(([n, l]) => (
-              <div key={l}>
-                <div className="text-3xl sm:text-4xl font-bold">{n}</div>
-                <div className="text-xs sm:text-sm text-white/60 mt-1">{l}</div>
+      {/* HERO — pinned, layered blue waves */}
+      <section ref={heroRef} className="relative h-screen w-full overflow-hidden text-white" style={{ background: "radial-gradient(ellipse at 50% 120%, oklch(0.35 0.22 265) 0%, oklch(0.09 0.05 265) 55%, oklch(0.06 0.03 265) 100%)" }}>
+        {/* Stacked wave curves */}
+        <svg className="absolute inset-0 h-full w-full" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden>
+          <defs>
+            <linearGradient id="wave1" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stopColor="oklch(0.55 0.25 260)" stopOpacity="0.0" />
+              <stop offset="60%" stopColor="oklch(0.7 0.26 258)" stopOpacity="0.9" />
+              <stop offset="100%" stopColor="oklch(0.9 0.18 240)" stopOpacity="1" />
+            </linearGradient>
+            <linearGradient id="wave2" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stopColor="oklch(0.4 0.22 265)" stopOpacity="0" />
+              <stop offset="70%" stopColor="oklch(0.55 0.28 258)" stopOpacity="0.8" />
+              <stop offset="100%" stopColor="oklch(0.75 0.22 245)" stopOpacity="1" />
+            </linearGradient>
+            <filter id="blur1"><feGaussianBlur stdDeviation="4" /></filter>
+          </defs>
+          <path data-load d="M -100 700 Q 400 200 900 500 T 1600 350 L 1600 900 L -100 900 Z" fill="url(#wave2)" opacity="0.55" filter="url(#blur1)" />
+          <path data-load d="M -100 780 Q 500 300 1000 600 T 1600 480 L 1600 900 L -100 900 Z" fill="url(#wave1)" opacity="0.85" />
+          <path data-load d="M -100 850 Q 600 420 1100 700 T 1600 620 L 1600 900 L -100 900 Z" fill="oklch(0.85 0.2 240)" opacity="0.95" />
+        </svg>
+        <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, oklch(0.08 0.04 265 / 0.4) 0%, transparent 40%)" }} />
+
+        <div className="relative z-10 mx-auto flex h-full max-w-7xl flex-col justify-end px-6 pb-16 pt-28">
+          <div className="grid gap-8 md:grid-cols-[1.4fr_1fr] items-end">
+            <div>
+              <div data-load className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-[11px] uppercase tracking-[0.2em] backdrop-blur">
+                <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse" /> Web Agency & Template Studio
               </div>
-            ))}
+              <h1 data-load className="text-balance text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-bold leading-[0.95] tracking-tight">
+                Crafted websites. <br />
+                <span className="font-serif italic">Built to scale.</span>
+              </h1>
+            </div>
+            <p data-load className="text-sm md:text-base text-white/70 max-w-sm md:justify-self-end">
+              Giestar merancang dan mengirim template premium serta project custom untuk brand yang ingin tampil beda — cepat, elegan, dan siap tumbuh.
+            </p>
           </div>
-        </div>
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-xs uppercase tracking-widest text-white/60 flex items-center gap-2">
-          <span className="h-px w-8 bg-white/40" /> Scroll to reveal
+
+          <div data-load className="mt-10 flex flex-wrap items-center gap-4">
+            <div className="flex items-center gap-3 rounded-2xl border border-white/20 bg-white/10 backdrop-blur-xl p-2 pr-5">
+              <div className="grid h-11 w-11 place-items-center rounded-xl bg-gradient-to-br from-white/90 to-white/60 text-primary font-bold">G</div>
+              <div>
+                <div className="text-sm font-semibold flex items-center gap-1.5">Giestar Studio <ArrowUpRight className="h-3.5 w-3.5" /></div>
+                <div className="text-[11px] text-white/60 uppercase tracking-widest">Web & Template Platform</div>
+              </div>
+            </div>
+            <Link to="/product" className="inline-flex items-center gap-2 rounded-full bg-white text-ink px-6 py-3 font-semibold hover:bg-white/90 transition">
+              Lihat Katalog <ArrowRight className="h-4 w-4" />
+            </Link>
+            <a href="#how" className="inline-flex items-center gap-2 rounded-full border border-white/30 px-6 py-3 font-semibold hover:bg-white/10 transition">
+              Cara Pembelian
+            </a>
+          </div>
         </div>
       </section>
 
