@@ -183,8 +183,8 @@ function Home() {
         </HeroWave>
       </div>
 
-      {/* OVERLAY reveal — About */}
-      <section ref={overlayRef} id="about" className="relative z-20 rounded-t-[3rem] bg-background -mt-8 shadow-elegant">
+      {/* OVERLAY reveal — About (slides up over pinned hero) */}
+      <section ref={overlayRef} id="about" className="relative z-20 bg-background shadow-elegant">
         <div className="mx-auto max-w-7xl px-6 py-24 md:py-32">
           <div data-reveal className="grid gap-10 md:grid-cols-[1fr_1.5fr] items-end">
             <div>
