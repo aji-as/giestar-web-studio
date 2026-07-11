@@ -80,41 +80,60 @@ function Home() {
     <div ref={rootRef} className="min-h-screen bg-background">
       <Nav dark />
 
-      {/* HERO — pinned */}
-      <section ref={heroRef} className="relative h-screen w-full overflow-hidden bg-hero-gradient text-white grain">
-        <div className="absolute inset-0 opacity-40" style={{ background: "radial-gradient(circle at 80% 30%, oklch(0.7 0.25 260) 0%, transparent 40%)" }} />
-        <div className="relative z-10 mx-auto flex h-full max-w-7xl flex-col justify-center px-6 pt-20">
-          <div className="max-w-4xl">
-            <div data-load className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs uppercase tracking-widest backdrop-blur">
-              <span className="h-1.5 w-1.5 rounded-full bg-primary-glow animate-pulse" /> Agency Web & Template Marketplace
-            </div>
-            <h1 data-load className="text-balance text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-[0.95] tracking-tight">
-              Bigger, Bolder <br />
-              and <span className="font-serif text-primary-glow">Better</span> websites.
-            </h1>
-            <p data-load className="mt-6 max-w-2xl text-base sm:text-lg text-white/70">
-              Giestar meracik template premium dan project custom untuk brand yang ingin tampil beda. Dari landing sederhana sampai marketplace kompleks.
-            </p>
-            <div data-load className="mt-8 flex flex-wrap gap-3">
-              <Link to="/product" className="inline-flex items-center gap-2 rounded-full bg-white text-ink px-6 py-3 font-semibold hover:bg-white/90 transition">
-                Lihat Katalog <ArrowRight className="h-4 w-4" />
-              </Link>
-              <a href="#how" className="inline-flex items-center gap-2 rounded-full border border-white/30 px-6 py-3 font-semibold hover:bg-white/10 transition">
-                Cara Pembelian
-              </a>
-            </div>
-          </div>
-          <div data-load className="mt-16 grid grid-cols-2 sm:grid-cols-4 gap-6 max-w-3xl border-t border-white/15 pt-8">
-            {[["120+", "Template siap"], ["95%", "Klien puas"], ["2–4h", "Waktu kirim"], ["24/7", "Support"]].map(([n, l]) => (
-              <div key={l}>
-                <div className="text-3xl sm:text-4xl font-bold">{n}</div>
-                <div className="text-xs sm:text-sm text-white/60 mt-1">{l}</div>
+      {/* HERO — pinned, layered blue waves */}
+      <section ref={heroRef} className="relative h-screen w-full overflow-hidden text-white" style={{ background: "radial-gradient(ellipse at 50% 120%, oklch(0.35 0.22 265) 0%, oklch(0.09 0.05 265) 55%, oklch(0.06 0.03 265) 100%)" }}>
+        {/* Stacked wave curves */}
+        <svg className="absolute inset-0 h-full w-full" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden>
+          <defs>
+            <linearGradient id="wave1" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stopColor="oklch(0.55 0.25 260)" stopOpacity="0.0" />
+              <stop offset="60%" stopColor="oklch(0.7 0.26 258)" stopOpacity="0.9" />
+              <stop offset="100%" stopColor="oklch(0.9 0.18 240)" stopOpacity="1" />
+            </linearGradient>
+            <linearGradient id="wave2" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stopColor="oklch(0.4 0.22 265)" stopOpacity="0" />
+              <stop offset="70%" stopColor="oklch(0.55 0.28 258)" stopOpacity="0.8" />
+              <stop offset="100%" stopColor="oklch(0.75 0.22 245)" stopOpacity="1" />
+            </linearGradient>
+            <filter id="blur1"><feGaussianBlur stdDeviation="4" /></filter>
+          </defs>
+          <path data-load d="M -100 700 Q 400 200 900 500 T 1600 350 L 1600 900 L -100 900 Z" fill="url(#wave2)" opacity="0.55" filter="url(#blur1)" />
+          <path data-load d="M -100 780 Q 500 300 1000 600 T 1600 480 L 1600 900 L -100 900 Z" fill="url(#wave1)" opacity="0.85" />
+          <path data-load d="M -100 850 Q 600 420 1100 700 T 1600 620 L 1600 900 L -100 900 Z" fill="oklch(0.85 0.2 240)" opacity="0.95" />
+        </svg>
+        <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, oklch(0.08 0.04 265 / 0.4) 0%, transparent 40%)" }} />
+
+        <div className="relative z-10 mx-auto flex h-full max-w-7xl flex-col justify-end px-6 pb-16 pt-28">
+          <div className="grid gap-8 md:grid-cols-[1.4fr_1fr] items-end">
+            <div>
+              <div data-load className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-[11px] uppercase tracking-[0.2em] backdrop-blur">
+                <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse" /> Web Agency & Template Studio
               </div>
-            ))}
+              <h1 data-load className="text-balance text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-bold leading-[0.95] tracking-tight">
+                Crafted websites. <br />
+                <span className="font-serif italic">Built to scale.</span>
+              </h1>
+            </div>
+            <p data-load className="text-sm md:text-base text-white/70 max-w-sm md:justify-self-end">
+              Giestar merancang dan mengirim template premium serta project custom untuk brand yang ingin tampil beda — cepat, elegan, dan siap tumbuh.
+            </p>
           </div>
-        </div>
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-xs uppercase tracking-widest text-white/60 flex items-center gap-2">
-          <span className="h-px w-8 bg-white/40" /> Scroll to reveal
+
+          <div data-load className="mt-10 flex flex-wrap items-center gap-4">
+            <div className="flex items-center gap-3 rounded-2xl border border-white/20 bg-white/10 backdrop-blur-xl p-2 pr-5">
+              <div className="grid h-11 w-11 place-items-center rounded-xl bg-gradient-to-br from-white/90 to-white/60 text-primary font-bold">G</div>
+              <div>
+                <div className="text-sm font-semibold flex items-center gap-1.5">Giestar Studio <ArrowUpRight className="h-3.5 w-3.5" /></div>
+                <div className="text-[11px] text-white/60 uppercase tracking-widest">Web & Template Platform</div>
+              </div>
+            </div>
+            <Link to="/product" className="inline-flex items-center gap-2 rounded-full bg-white text-ink px-6 py-3 font-semibold hover:bg-white/90 transition">
+              Lihat Katalog <ArrowRight className="h-4 w-4" />
+            </Link>
+            <a href="#how" className="inline-flex items-center gap-2 rounded-full border border-white/30 px-6 py-3 font-semibold hover:bg-white/10 transition">
+              Cara Pembelian
+            </a>
+          </div>
         </div>
       </section>
 
@@ -161,27 +180,130 @@ function Home() {
           </div>
         </div>
 
+        {/* KEUNGGULAN */}
+        <div id="keunggulan" className="relative overflow-hidden" style={{ background: "linear-gradient(135deg, oklch(0.25 0.15 265) 0%, oklch(0.35 0.22 262) 60%, oklch(0.5 0.24 258) 100%)" }}>
+          <div className="mx-auto max-w-7xl px-6 py-24 md:py-32 text-white">
+            <div data-reveal className="grid gap-10 md:grid-cols-[1fr_1.2fr] items-end">
+              <div>
+                <div className="text-[11px] uppercase tracking-[0.25em] text-white/70 font-semibold">Keunggulan</div>
+                <h2 className="mt-3 text-4xl md:text-5xl font-bold tracking-tight leading-tight">
+                  Unleashing the potential <br /> of your <span className="font-serif italic">brand</span>
+                </h2>
+              </div>
+              <p className="text-white/70 max-w-md md:justify-self-end">
+                Dari strategi sampai eksekusi visual — kami merancang solusi yang bekerja, menarik perhatian, dan meninggalkan kesan di hati audiens Anda.
+              </p>
+            </div>
+
+            <div data-reveal className="mt-14 grid gap-5 md:grid-cols-3">
+              {/* Featured white card */}
+              <div className="step-card rounded-3xl bg-white text-foreground p-7 flex flex-col shadow-elegant">
+                <div className="text-[11px] uppercase tracking-widest text-primary font-semibold">01 — Signature</div>
+                <h3 className="mt-3 text-2xl font-bold">Desain & Web Craft</h3>
+                <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
+                  Setiap website kami rancang tidak hanya indah, tapi berorientasi hasil. Interaksi intuitif, grafis menarik, dan konsistensi visual yang membangun kepercayaan brand Anda dari halaman pertama.
+                </p>
+                <div className="mt-auto pt-8 flex items-center justify-between">
+                  <a href="#contact" className="inline-flex items-center gap-2 rounded-full bg-ink text-white px-5 py-3 text-sm font-semibold hover:opacity-90 transition">Mulai project Anda</a>
+                  <a href="#contact" className="grid h-11 w-11 place-items-center rounded-full bg-ink text-white hover:opacity-90 transition" aria-label="Mulai"><ArrowUpRight className="h-4 w-4" /></a>
+                </div>
+              </div>
+              {/* Light blue cards */}
+              {[
+                { n: "02", t: "Strategi Brand", d: "Positioning tajam & narasi yang membedakan Anda dari kompetitor." },
+                { n: "03", t: "Arah Kreatif", d: "Direksi visual dari moodboard hingga sistem desain siap pakai." },
+              ].map((c) => (
+                <div key={c.n} className="step-card rounded-3xl p-7 flex flex-col text-white" style={{ background: "linear-gradient(160deg, oklch(0.72 0.14 258) 0%, oklch(0.6 0.18 260) 100%)" }}>
+                  <div className="text-[11px] uppercase tracking-widest text-white/80 font-semibold">{c.n} — Service</div>
+                  <h3 className="mt-3 text-2xl font-bold">{c.t}</h3>
+                  <p className="mt-3 text-sm text-white/80 leading-relaxed">{c.d}</p>
+                  <div className="mt-auto pt-8 flex items-center justify-between">
+                    <a href="#contact" className="inline-flex items-center gap-2 rounded-full bg-white text-ink px-5 py-3 text-sm font-semibold hover:bg-white/90 transition">Mulai project Anda</a>
+                    <a href="#contact" className="grid h-11 w-11 place-items-center rounded-full bg-white text-ink hover:bg-white/90 transition" aria-label="Mulai"><ArrowRight className="h-4 w-4" /></a>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Perks strip */}
+            <div data-reveal className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {[
+                { n: "2–4h", l: "Waktu pengerjaan" },
+                { n: "120+", l: "Template siap pakai" },
+                { n: "95%", l: "Klien puas & repeat" },
+                { n: "24/7", l: "Support & konsultasi" },
+              ].map((s) => (
+                <div key={s.l} className="rounded-2xl border border-white/15 bg-white/5 backdrop-blur px-6 py-5">
+                  <div className="text-3xl font-bold">{s.n}</div>
+                  <div className="text-xs text-white/70 mt-1 uppercase tracking-widest">{s.l}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
         {/* HOW TO BUY */}
         <div id="how" className="mx-auto max-w-7xl px-6 py-24 md:py-32">
-          <div data-reveal className="max-w-3xl">
-            <div className="text-xs uppercase tracking-widest text-primary font-semibold">Cara Pembelian</div>
-            <h2 className="mt-3 text-4xl md:text-6xl font-bold tracking-tight">
-              Delapan langkah <span className="font-serif">sederhana</span> untuk website Anda.
-            </h2>
+          <div data-reveal className="flex items-end justify-between gap-6 flex-wrap">
+            <div className="max-w-2xl">
+              <div className="text-[11px] uppercase tracking-[0.25em] text-primary font-semibold">Cara Pembelian</div>
+              <h2 className="mt-3 text-4xl md:text-6xl font-bold tracking-tight leading-[1.05]">
+                Delapan langkah <span className="font-serif italic">sederhana</span> untuk website Anda.
+              </h2>
+            </div>
+            <p className="text-muted-foreground max-w-sm">
+              Proses transparan dari pemilihan template sampai project siap live — cukup 2–4 jam pengerjaan.
+            </p>
           </div>
           <div className="steps-grid mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {STEPS.map((s, i) => (
-              <div key={s.title} className="step-card group relative rounded-3xl border bg-card p-6 shadow-card hover:shadow-elegant transition">
-                <div className="flex items-center justify-between">
-                  <div className="grid h-12 w-12 place-items-center rounded-2xl bg-blue-gradient text-white">
-                    <s.icon className="h-5 w-5" />
+            {STEPS.map((s, i) => {
+              const featured = i === 0;
+              const blue = i % 2 === 1;
+              return (
+                <div
+                  key={s.title}
+                  className={`step-card group relative rounded-3xl p-6 flex flex-col min-h-[260px] transition ${
+                    featured
+                      ? "bg-white shadow-elegant"
+                      : blue
+                        ? "text-white shadow-card"
+                        : "bg-white shadow-card border"
+                  }`}
+                  style={blue ? { background: "linear-gradient(160deg, oklch(0.75 0.13 258) 0%, oklch(0.62 0.18 260) 100%)" } : undefined}
+                >
+                  <div className="flex items-center justify-between">
+                    <span className={`text-[11px] uppercase tracking-widest font-semibold ${blue ? "text-white/85" : "text-primary"}`}>
+                      Step {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <div className={`grid h-10 w-10 place-items-center rounded-xl ${blue ? "bg-white/20 text-white" : "bg-secondary text-primary"}`}>
+                      <s.icon className="h-4 w-4" />
+                    </div>
                   </div>
-                  <span className="text-3xl font-serif text-primary/30">{String(i + 1).padStart(2, "0")}</span>
+                  <h3 className={`mt-6 text-xl font-bold leading-tight ${blue ? "text-white" : ""}`}>{s.title}</h3>
+                  {featured && (
+                    <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
+                  )}
+                  {!featured && (
+                    <p className={`mt-2 text-sm leading-relaxed ${blue ? "text-white/80" : "text-muted-foreground"}`}>{s.desc}</p>
+                  )}
+                  <div className="mt-auto pt-6 flex items-center justify-between">
+                    <a
+                      href="#contact"
+                      className={`inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-xs font-semibold transition ${
+                        blue ? "bg-white text-ink hover:bg-white/90" : "bg-ink text-white hover:opacity-90"
+                      }`}
+                    >
+                      Mulai langkah ini
+                    </a>
+                    <div className={`grid h-10 w-10 place-items-center rounded-full transition group-hover:-translate-y-0.5 ${
+                      blue ? "bg-white text-ink" : "bg-ink text-white"
+                    }`}>
+                      <ArrowUpRight className="h-4 w-4" />
+                    </div>
+                  </div>
                 </div>
-                <h3 className="mt-6 text-lg font-bold">{s.title}</h3>
-                <p className="mt-2 text-sm text-muted-foreground">{s.desc}</p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 
