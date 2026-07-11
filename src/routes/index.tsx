@@ -41,26 +41,49 @@ function Home() {
         ease: "power3.out",
       });
 
-      // Pin hero softly — no scale/opacity change so content is never invisible
-      ScrollTrigger.create({
-        trigger: heroRef.current,
-        start: "top top",
-        end: "+=80%",
-        pin: true,
-        pinSpacing: true,
-        anticipatePin: 1,
-      });
-      // Subtle parallax fade on scroll (doesn't fully hide)
-      gsap.to(heroRef.current, {
-        yPercent: -8,
-        ease: "none",
-        scrollTrigger: {
-          trigger: heroRef.current,
+      // Pinned hero: hero stays fixed while the next section (overlay) slides up over it
+      const hero = heroRef.current;
+      const overlay = overlayRef.current;
+      if (hero) {
+        ScrollTrigger.create({
+          trigger: hero,
           start: "top top",
-          end: "+=80%",
-          scrub: true,
-        },
-      });
+          end: "+=100%",
+          pin: true,
+          pinSpacing: false, // let overlay section scroll up ON TOP of pinned hero
+          anticipatePin: 1,
+        });
+        // Hero content gently scales & fades while pinned
+        gsap.to(hero.querySelector("[data-hero-inner]") ?? hero, {
+          scale: 0.92,
+          opacity: 0.55,
+          ease: "none",
+          scrollTrigger: {
+            trigger: hero,
+            start: "top top",
+            end: "+=100%",
+            scrub: true,
+          },
+        });
+      }
+      // Overlay section rises with a growing border-radius as the hero is pinned
+      if (overlay) {
+        gsap.fromTo(
+          overlay,
+          { borderTopLeftRadius: 0, borderTopRightRadius: 0 },
+          {
+            borderTopLeftRadius: 64,
+            borderTopRightRadius: 64,
+            ease: "none",
+            scrollTrigger: {
+              trigger: overlay,
+              start: "top bottom",
+              end: "top top",
+              scrub: true,
+            },
+          },
+        );
+      }
 
       // Section reveals — use fromTo + once so elements never stay hidden
       gsap.utils.toArray<HTMLElement>("[data-reveal]").forEach((el) => {
