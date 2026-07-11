@@ -3,6 +3,7 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ArrowUpRight } from "lucide-react";
 import { Nav } from "@/components/Nav";
+import { HeroWave } from "@/components/HeroWave";
 import { Footer } from "@/components/Footer";
 import { BLOGS } from "@/lib/data";
 import { useHydrated } from "@/hooks/useHydrated";
