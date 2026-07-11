@@ -1,8 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef, useState } from "react";
 import gsap from "gsap";
-import { Search, X, ArrowUpRight, ShoppingBag, FileCode2 } from "lucide-react";
+import { Search, X, ArrowUpRight, ArrowRight, ShoppingBag, FileCode2 } from "lucide-react";
 import { Nav } from "@/components/Nav";
+import { HeroWave } from "@/components/HeroWave";
 import { Footer } from "@/components/Footer";
 import { PRODUCTS, CATEGORIES, formatIDR, waLink, type Product } from "@/lib/data";
 import { useHydrated } from "@/hooks/useHydrated";
