@@ -60,19 +60,21 @@ function BlogDetail() {
     <div ref={rootRef} className="min-h-screen bg-background">
       <Nav />
 
-      <article className="pt-32 pb-16">
-        <div className="mx-auto max-w-3xl px-6">
-          <Link data-load to="/blog" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground">
+      <HeroWave>
+        <div className="mx-auto max-w-3xl px-6 pt-32 pb-20">
+          <Link data-load to="/blog" className="inline-flex items-center gap-2 text-sm text-white/70 hover:text-white">
             <ArrowLeft className="h-4 w-4" /> Semua artikel
           </Link>
-          <div data-load className="mt-8 flex items-center gap-3 text-xs uppercase tracking-widest text-primary font-semibold">
-            <span>{blog.category}</span><span className="h-px w-6 bg-primary/30" /><span className="text-muted-foreground">{blog.date} · {blog.readTime}</span>
+          <div data-load className="mt-8 flex items-center gap-3 text-[11px] uppercase tracking-[0.2em] text-white/85 font-semibold">
+            <span>{blog.category}</span><span className="h-px w-6 bg-white/30" /><span className="text-white/60">{blog.date} · {blog.readTime}</span>
           </div>
-          <h1 data-load className="mt-4 text-4xl md:text-6xl font-bold tracking-tight text-balance">{blog.title}</h1>
-          <p data-load className="mt-6 text-xl text-muted-foreground">{blog.excerpt}</p>
+          <h1 data-load className="mt-4 text-4xl md:text-6xl font-bold tracking-tight text-balance leading-[1.05]">{blog.title}</h1>
+          <p data-load className="mt-6 text-lg md:text-xl text-white/70">{blog.excerpt}</p>
         </div>
+      </HeroWave>
 
-        <div data-load className={`mx-auto max-w-5xl mt-12 aspect-[16/9] rounded-3xl bg-gradient-to-br ${blog.gradient} grain`} />
+      <article className="pb-16">
+        <div data-load className={`mx-auto max-w-5xl -mt-16 md:-mt-24 relative z-20 aspect-[16/9] rounded-3xl bg-gradient-to-br ${blog.gradient} grain shadow-elegant`} />
 
         <div data-load className="mx-auto max-w-3xl px-6 mt-12 prose prose-lg">
           <p className="text-lg leading-relaxed text-foreground/90">{blog.content}</p>
