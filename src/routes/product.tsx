@@ -52,10 +52,12 @@ function ProductPage() {
     <div ref={rootRef} className="min-h-screen bg-background">
       <Nav />
 
-      <section className="pt-32 pb-16 bg-hero-gradient text-white grain">
-        <div className="mx-auto max-w-7xl px-6">
-          <div data-load className="text-xs uppercase tracking-widest text-primary-glow">Product Catalog</div>
-          <h1 data-load className="mt-3 text-5xl md:text-7xl font-bold tracking-tight text-balance max-w-4xl">
+      <HeroWave>
+        <div className="mx-auto max-w-7xl px-6 pt-32 pb-20">
+          <div data-load className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-[11px] uppercase tracking-[0.2em] backdrop-blur">
+            <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse" /> Product Catalog
+          </div>
+          <h1 data-load className="mt-5 text-5xl md:text-7xl font-bold tracking-tight text-balance max-w-4xl leading-[0.95]">
             Template <span className="font-serif italic">premium</span>, siap untuk brand Anda.
           </h1>
           <p data-load className="mt-5 text-white/70 max-w-xl">Cari berdasarkan nama, kategori, atau teknologi. Klik gambar untuk melihat detail.</p>
@@ -83,7 +85,7 @@ function ProductPage() {
             </div>
           </div>
         </div>
-      </section>
+      </HeroWave>
 
       <section className="mx-auto max-w-7xl px-6 py-16">
         <div className="text-sm text-muted-foreground mb-6">{filtered.length} template ditemukan</div>
@@ -94,34 +96,66 @@ function ProductPage() {
           </div>
         ) : (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {filtered.map((p) => (
-              <article key={p.id} className="prod-card group rounded-3xl overflow-hidden border bg-card shadow-card hover:shadow-elegant transition">
-                <button onClick={() => setSelected(p)} className="block w-full text-left">
-                  <div className={`aspect-[4/3] bg-gradient-to-br ${p.gradient} relative grain`}>
-                    <div className="absolute top-4 left-4 rounded-full bg-black/30 backdrop-blur text-white text-xs px-3 py-1">{p.category}</div>
-                    <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between text-white">
-                      <span className="font-serif italic text-4xl leading-none">{p.name.split(" ")[0]}</span>
-                      <span className="text-sm opacity-80">2026</span>
+            {filtered.map((p, i) => {
+              const blue = i % 3 === 1;
+              return (
+                <article
+                  key={p.id}
+                  className={`prod-card group rounded-3xl overflow-hidden flex flex-col transition ${
+                    blue ? "text-white shadow-card" : "bg-white border shadow-card hover:shadow-elegant"
+                  }`}
+                  style={blue ? { background: "linear-gradient(160deg, oklch(0.72 0.14 258) 0%, oklch(0.55 0.2 262) 100%)" } : undefined}
+                >
+                  <button onClick={() => setSelected(p)} className="block w-full text-left">
+                    <div className={`aspect-[4/3] bg-gradient-to-br ${p.gradient} relative grain m-3 rounded-2xl overflow-hidden`}>
+                      <div className="absolute top-4 left-4 rounded-full bg-black/40 backdrop-blur text-white text-[11px] uppercase tracking-widest px-3 py-1">{p.category}</div>
+                      <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between text-white">
+                        <span className="font-serif italic text-4xl leading-none">{p.name.split(" ")[0]}</span>
+                        <span className="text-xs opacity-80 uppercase tracking-widest">2026</span>
+                      </div>
+                    </div>
+                  </button>
+                  <div className="px-6 pb-6 pt-2 flex flex-col flex-1">
+                    <div className="flex items-center justify-between gap-3">
+                      <h3 className={`text-lg font-bold ${blue ? "text-white" : ""}`}>{p.name}</h3>
+                      <span className={`text-sm font-semibold ${blue ? "text-white" : "text-primary"}`}>{formatIDR(p.priceJadi)}</span>
+                    </div>
+                    <p className={`mt-1.5 text-sm line-clamp-2 ${blue ? "text-white/80" : "text-muted-foreground"}`}>{p.description}</p>
+                    <div className="mt-4 flex flex-wrap gap-1.5">
+                      {p.tags.map((t) => (
+                        <span
+                          key={t}
+                          className={`text-[11px] rounded-full px-2.5 py-1 ${
+                            blue ? "bg-white/15 text-white" : "bg-secondary text-secondary-foreground"
+                          }`}
+                        >
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                    <div className="mt-auto pt-6 flex items-center justify-between">
+                      <button
+                        onClick={() => setSelected(p)}
+                        className={`inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-xs font-semibold transition ${
+                          blue ? "bg-white text-ink hover:bg-white/90" : "bg-ink text-white hover:opacity-90"
+                        }`}
+                      >
+                        Lihat Detail
+                      </button>
+                      <button
+                        onClick={() => setSelected(p)}
+                        aria-label="Lihat detail"
+                        className={`grid h-10 w-10 place-items-center rounded-full transition group-hover:-translate-y-0.5 ${
+                          blue ? "bg-white text-ink" : "bg-ink text-white"
+                        }`}
+                      >
+                        <ArrowRight className="h-4 w-4" />
+                      </button>
                     </div>
                   </div>
-                </button>
-                <div className="p-6">
-                  <div className="flex items-center justify-between gap-3">
-                    <h3 className="text-lg font-bold">{p.name}</h3>
-                    <span className="text-sm font-semibold text-primary">{formatIDR(p.priceJadi)}</span>
-                  </div>
-                  <p className="mt-1.5 text-sm text-muted-foreground line-clamp-2">{p.description}</p>
-                  <div className="mt-4 flex flex-wrap gap-1.5">
-                    {p.tags.map((t) => (
-                      <span key={t} className="text-[11px] rounded-full bg-secondary px-2.5 py-1 text-secondary-foreground">{t}</span>
-                    ))}
-                  </div>
-                  <button onClick={() => setSelected(p)} className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:gap-2.5 transition-all">
-                    Lihat Detail <ArrowUpRight className="h-4 w-4" />
-                  </button>
-                </div>
-              </article>
-            ))}
+                </article>
+              );
+            })}
           </div>
         )}
       </section>
