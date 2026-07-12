@@ -6,21 +6,22 @@ export type Product = {
   priceSource: number;
   tags: string[];
   gradient: string;
+  image: string;
   description: string;
 };
 
 export const CATEGORIES = ["All", "Landing", "Portfolio", "E-Commerce", "SaaS", "Blog", "Agency"] as const;
 
 export const PRODUCTS: Product[] = [
-  { id: "aurora", name: "Aurora Studio", category: "Agency", priceJadi: 1500000, priceSource: 3500000, tags: ["Next.js", "Tailwind", "GSAP"], gradient: "from-indigo-600 via-blue-500 to-cyan-400", description: "Template agency premium dengan animasi scroll cinematic dan grid case study." },
-  { id: "monolith", name: "Monolith", category: "Portfolio", priceJadi: 1200000, priceSource: 2800000, tags: ["React", "Framer"], gradient: "from-slate-900 via-slate-700 to-slate-500", description: "Portfolio brutalist untuk kreatif dengan typography editorial." },
-  { id: "orbit", name: "Orbit SaaS", category: "SaaS", priceJadi: 2000000, priceSource: 4500000, tags: ["Next.js", "Auth", "Dashboard"], gradient: "from-blue-700 via-blue-500 to-sky-300", description: "Landing SaaS lengkap dengan pricing, dashboard preview, dan feature grid." },
-  { id: "prisma", name: "Prisma Shop", category: "E-Commerce", priceJadi: 2500000, priceSource: 5500000, tags: ["Shopify", "Cart"], gradient: "from-fuchsia-600 via-pink-500 to-rose-400", description: "E-commerce modern dengan cart, filter, dan checkout smooth." },
-  { id: "quill", name: "Quill Journal", category: "Blog", priceJadi: 1000000, priceSource: 2200000, tags: ["MDX", "CMS"], gradient: "from-amber-500 via-orange-400 to-red-400", description: "Blog editorial dengan reading mode dan MDX support." },
-  { id: "vector", name: "Vector Landing", category: "Landing", priceJadi: 900000, priceSource: 2000000, tags: ["Astro", "Tailwind"], gradient: "from-emerald-600 via-teal-500 to-cyan-400", description: "Landing page konversi tinggi untuk startup awal." },
-  { id: "nova", name: "Nova Agency", category: "Agency", priceJadi: 1800000, priceSource: 4000000, tags: ["Vite", "GSAP"], gradient: "from-violet-700 via-purple-500 to-fuchsia-400", description: "Agency template dengan pinned hero dan case study grid." },
-  { id: "helio", name: "Helio Portfolio", category: "Portfolio", priceJadi: 1100000, priceSource: 2500000, tags: ["Next.js"], gradient: "from-yellow-500 via-orange-500 to-pink-500", description: "Portfolio warm & bright cocok untuk fotografer." },
-  { id: "cobalt", name: "Cobalt SaaS", category: "SaaS", priceJadi: 2200000, priceSource: 4800000, tags: ["Stripe", "Auth"], gradient: "from-blue-800 via-indigo-600 to-blue-400", description: "Landing SaaS enterprise dengan integrasi payment." },
+  { id: "aurora", name: "Aurora Studio", category: "Agency", priceJadi: 1500000, priceSource: 3500000, tags: ["Next.js", "Tailwind", "GSAP"], gradient: "from-indigo-600 via-blue-500 to-cyan-400", image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800", description: "Template agency premium dengan animasi scroll cinematic dan grid case study." },
+  { id: "monolith", name: "Monolith", category: "Portfolio", priceJadi: 1200000, priceSource: 2800000, tags: ["React", "Framer"], gradient: "from-slate-900 via-slate-700 to-slate-500", image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=800", description: "Portfolio brutalist untuk kreatif dengan typography editorial." },
+  { id: "orbit", name: "Orbit SaaS", category: "SaaS", priceJadi: 2000000, priceSource: 4500000, tags: ["Next.js", "Auth", "Dashboard"], gradient: "from-blue-700 via-blue-500 to-sky-300", image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800", description: "Landing SaaS lengkap dengan pricing, dashboard preview, dan feature grid." },
+  { id: "prisma", name: "Prisma Shop", category: "E-Commerce", priceJadi: 2500000, priceSource: 5500000, tags: ["Shopify", "Cart"], gradient: "from-fuchsia-600 via-pink-500 to-rose-400", image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&q=80&w=800", description: "E-commerce modern dengan cart, filter, dan checkout smooth." },
+  { id: "quill", name: "Quill Journal", category: "Blog", priceJadi: 1000000, priceSource: 2200000, tags: ["MDX", "CMS"], gradient: "from-amber-500 via-orange-400 to-red-400", image: "https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&q=80&w=800", description: "Blog editorial dengan reading mode dan MDX support." },
+  { id: "vector", name: "Vector Landing", category: "Landing", priceJadi: 900000, priceSource: 2000000, tags: ["Astro", "Tailwind"], gradient: "from-emerald-600 via-teal-500 to-cyan-400", image: "https://images.unsplash.com/photo-1522542550221-31fd19575a2d?auto=format&fit=crop&q=80&w=800", description: "Landing page konversi tinggi untuk startup awal." },
+  { id: "nova", name: "Nova Agency", category: "Agency", priceJadi: 1800000, priceSource: 4000000, tags: ["Vite", "GSAP"], gradient: "from-violet-700 via-purple-500 to-fuchsia-400", image: "https://images.unsplash.com/photo-1559028012-481c04fa702d?auto=format&fit=crop&q=80&w=800", description: "Agency template dengan pinned hero dan case study grid." },
+  { id: "helio", name: "Helio Portfolio", category: "Portfolio", priceJadi: 1100000, priceSource: 2500000, tags: ["Next.js"], gradient: "from-yellow-500 via-orange-500 to-pink-500", image: "https://images.unsplash.com/photo-1542744094-3a31f272c490?auto=format&fit=crop&q=80&w=800", description: "Portfolio warm & bright cocok untuk fotografer." },
+  { id: "cobalt", name: "Cobalt SaaS", category: "SaaS", priceJadi: 2200000, priceSource: 4800000, tags: ["Stripe", "Auth"], gradient: "from-blue-800 via-indigo-600 to-blue-400", image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800", description: "Landing SaaS enterprise dengan integrasi payment." },
 ];
 
 export type Blog = {

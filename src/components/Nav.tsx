@@ -3,8 +3,8 @@ import { useState } from "react";
 import { Menu, X } from "lucide-react";
 
 const links = [
-  { to: "/", label: "Home" },
-  { to: "/product", label: "Product" },
+  { to: "/", label: "Beranda" },
+  { to: "/product", label: "Produk" },
   { to: "/blog", label: "Blog" },
 ];
 
@@ -25,7 +25,7 @@ export function Nav({ dark = false }: { dark?: boolean }) {
           ))}
         </div>
         <a href="#contact" className="hidden md:inline-flex items-center gap-2 rounded-full bg-primary text-primary-foreground px-4 py-2 text-sm font-semibold hover:bg-primary/90 transition">
-          Talk to us <span aria-hidden>↗</span>
+          Hubungi Kami <span aria-hidden>↗</span>
         </a>
         <button onClick={() => setOpen((v) => !v)} className="md:hidden grid h-9 w-9 place-items-center rounded-full bg-black/5" aria-label="Menu">
           {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
@@ -38,7 +38,7 @@ export function Nav({ dark = false }: { dark?: boolean }) {
               {l.label}
             </Link>
           ))}
-          <a href="#contact" onClick={() => setOpen(false)} className="mt-1 block text-center rounded-2xl bg-primary text-primary-foreground px-4 py-3 font-semibold">Talk to us</a>
+          <a href="#contact" onClick={() => setOpen(false)} className="mt-1 block text-center rounded-2xl bg-primary text-primary-foreground px-4 py-3 font-semibold">Hubungi Kami</a>
         </div>
       )}
     </header>

@@ -10,36 +10,36 @@ export function Footer() {
               <span className="grid h-10 w-10 place-items-center rounded-full bg-blue-gradient">G</span>
               giestar<span className="text-primary-glow">.</span>
             </div>
-            <p className="mt-4 max-w-xs text-white/60">Agency jasa pembuatan website & marketplace template premium untuk brand, startup, dan kreator.</p>
+            <p className="mt-4 max-w-xs text-white/60">Jasa pembuatan website profesional & template premium untuk UMKM, bisnis lokal, dan kreator yang ingin tampil beda secara online.</p>
           </div>
           <div>
-            <div className="text-xs uppercase tracking-widest text-white/40">Sitemap</div>
+            <div className="text-xs uppercase tracking-widest text-white/40">Navigasi</div>
             <ul className="mt-4 space-y-2">
-              <li><Link to="/" className="hover:text-primary-glow">Home</Link></li>
-              <li><Link to="/product" className="hover:text-primary-glow">Product</Link></li>
+              <li><Link to="/" className="hover:text-primary-glow">Beranda</Link></li>
+              <li><Link to="/product" className="hover:text-primary-glow">Produk</Link></li>
               <li><Link to="/blog" className="hover:text-primary-glow">Blog</Link></li>
             </ul>
           </div>
           <div>
-            <div className="text-xs uppercase tracking-widest text-white/40">Contact</div>
+            <div className="text-xs uppercase tracking-widest text-white/40">Kontak</div>
             <ul className="mt-4 space-y-2 text-white/70">
-              <li>hello@giestar.id</li>
-              <li>+62 812-3456-7890</li>
-              <li>Jakarta, Indonesia</li>
+              <li>giestar.id@gmail.com</li>
+              <li>+62 851-5072-7624</li>
+              <li>Pemalang, Jawa Tengah</li>
             </ul>
           </div>
           <div>
-            <div className="text-xs uppercase tracking-widest text-white/40">Social</div>
+            <div className="text-xs uppercase tracking-widest text-white/40">Sosial</div>
             <ul className="mt-4 space-y-2 text-white/70">
-              <li>Instagram</li>
-              <li>Dribbble</li>
-              <li>Behance</li>
+              <li><a href="https://www.instagram.com/giestar_id" target="_blank" rel="noreferrer" className="hover:text-primary-glow">Instagram</a></li>
+              <li><a href="https://wa.me/6285150727624" target="_blank" rel="noreferrer" className="hover:text-primary-glow">WhatsApp</a></li>
+              <li><a href="https://www.facebook.com/Giestar.id" target="_blank" rel="noreferrer" className="hover:text-primary-glow">Facebook</a></li>
             </ul>
           </div>
         </div>
         <div className="mt-16 flex flex-col md:flex-row items-center justify-between gap-4 border-t border-white/10 pt-6 text-sm text-white/40">
-          <span>© 2026 giestar. All rights reserved.</span>
-          <span>Crafted with care in Jakarta.</span>
+          <span>© 2026 Giestar. Semua hak dilindungi.</span>
+          <span>Dibuat dengan ♥ dari Pemalang, Jawa Tengah.</span>
         </div>
         <div className="pointer-events-none select-none">
           <div className="mt-4 text-center font-serif italic text-[22vw] leading-none tracking-tighter text-white/[0.04]">giestar</div>

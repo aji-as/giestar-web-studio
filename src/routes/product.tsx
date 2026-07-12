@@ -55,12 +55,12 @@ function ProductPage() {
       <HeroWave>
         <div className="mx-auto max-w-7xl px-6 pt-32 pb-20">
           <div data-load className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-[11px] uppercase tracking-[0.2em] backdrop-blur">
-            <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse" /> Product Catalog
+            <span className="h-1.5 w-1.5 rounded-full bg-yellow-400 animate-pulse" /> Katalog Produk
           </div>
           <h1 data-load className="mt-5 text-5xl md:text-7xl font-bold tracking-tight text-balance max-w-4xl leading-[0.95]">
-            Template <span className="font-serif italic">premium</span>, siap untuk brand Anda.
+            Template <span className="font-serif italic text-yellow-300">premium</span>, untuk bisnis & UMKM Anda.
           </h1>
-          <p data-load className="mt-5 text-white/70 max-w-xl">Cari berdasarkan nama, kategori, atau teknologi. Klik gambar untuk melihat detail.</p>
+          <p data-load className="mt-5 text-white/70 max-w-xl">Pilih template sesuai kategori atau cari berdasarkan nama. Klik kartu untuk melihat detail dan harga.</p>
 
           <div data-load className="mt-10 flex flex-col md:flex-row gap-3">
             <div className="relative flex-1">
@@ -101,57 +101,36 @@ function ProductPage() {
               return (
                 <article
                   key={p.id}
-                  className={`prod-card group rounded-3xl overflow-hidden flex flex-col transition ${
-                    blue ? "text-white shadow-card" : "bg-white border shadow-card hover:shadow-elegant"
-                  }`}
-                  style={blue ? { background: "linear-gradient(160deg, oklch(0.72 0.14 258) 0%, oklch(0.55 0.2 262) 100%)" } : undefined}
+                  className="prod-card group relative aspect-square rounded-3xl overflow-hidden cursor-pointer shadow-card hover:shadow-elegant transition"
+                  onClick={() => setSelected(p)}
                 >
-                  <button onClick={() => setSelected(p)} className="block w-full text-left">
-                    <div className={`aspect-[4/3] bg-gradient-to-br ${p.gradient} relative grain m-3 rounded-2xl overflow-hidden`}>
-                      <div className="absolute top-4 left-4 rounded-full bg-black/40 backdrop-blur text-white text-[11px] uppercase tracking-widest px-3 py-1">{p.category}</div>
-                      <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between text-white">
-                        <span className="font-serif italic text-4xl leading-none">{p.name.split(" ")[0]}</span>
-                        <span className="text-xs opacity-80 uppercase tracking-widest">2026</span>
-                      </div>
+                  <img src={p.image} alt={p.name} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                  <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-500" />
+                  
+                  {/* Default State */}
+                  <div className="absolute inset-0 p-8 flex flex-col justify-between">
+                    <div className="flex items-start justify-between relative z-10">
+                      <span className="rounded-full bg-black/40 backdrop-blur text-white text-[11px] uppercase tracking-widest px-4 py-2">{p.category}</span>
+                      <span className="text-xs font-semibold text-white uppercase tracking-widest drop-shadow-md">2026</span>
                     </div>
-                  </button>
-                  <div className="px-6 pb-6 pt-2 flex flex-col flex-1">
-                    <div className="flex items-center justify-between gap-3">
-                      <h3 className={`text-lg font-bold ${blue ? "text-white" : ""}`}>{p.name}</h3>
-                      <span className={`text-sm font-semibold ${blue ? "text-white" : "text-primary"}`}>{formatIDR(p.priceJadi)}</span>
-                    </div>
-                    <p className={`mt-1.5 text-sm line-clamp-2 ${blue ? "text-white/80" : "text-muted-foreground"}`}>{p.description}</p>
-                    <div className="mt-4 flex flex-wrap gap-1.5">
-                      {p.tags.map((t) => (
-                        <span
-                          key={t}
-                          className={`text-[11px] rounded-full px-2.5 py-1 ${
-                            blue ? "bg-white/15 text-white" : "bg-secondary text-secondary-foreground"
-                          }`}
-                        >
-                          {t}
-                        </span>
-                      ))}
-                    </div>
-                    <div className="mt-auto pt-6 flex items-center justify-between">
-                      <button
-                        onClick={() => setSelected(p)}
-                        className={`inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-xs font-semibold transition ${
-                          blue ? "bg-white text-ink hover:bg-white/90" : "bg-ink text-white hover:opacity-90"
-                        }`}
-                      >
-                        Lihat Detail
-                      </button>
-                      <button
-                        onClick={() => setSelected(p)}
-                        aria-label="Lihat detail"
-                        className={`grid h-10 w-10 place-items-center rounded-full transition group-hover:-translate-y-0.5 ${
-                          blue ? "bg-white text-ink" : "bg-ink text-white"
-                        }`}
-                      >
-                        <ArrowRight className="h-4 w-4" />
-                      </button>
-                    </div>
+                  </div>
+
+                  {/* Hover Overlay */}
+                  <div className="absolute inset-x-0 bottom-0 p-8 pt-20 bg-gradient-to-t from-black/90 via-black/60 to-transparent flex flex-col justify-end translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                     <div className="flex items-center justify-between text-white">
+                       <span className="text-2xl font-bold text-yellow-300">{formatIDR(p.priceJadi)}</span>
+                     </div>
+                     <p className="mt-2 text-sm text-white/80 line-clamp-2">{p.description}</p>
+                     <div className="mt-4 flex flex-wrap gap-2">
+                       {p.tags.slice(0, 3).map((t) => (
+                         <span key={t} className="text-[11px] rounded-full px-3 py-1 bg-white/20 text-white backdrop-blur">{t}</span>
+                       ))}
+                     </div>
+                  </div>
+
+                  {/* Floating Action Button */}
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 bg-white text-ink rounded-full flex items-center justify-center scale-0 group-hover:scale-100 transition-transform duration-500 shadow-xl pointer-events-none z-10">
+                     <ArrowUpRight className="h-8 w-8" />
                   </div>
                 </article>
               );
@@ -170,8 +149,11 @@ function ProductModal({ product, onClose }: { product: Product; onClose: () => v
   const backdropRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    gsap.fromTo(backdropRef.current, { opacity: 0 }, { opacity: 1, duration: 0.3 });
-    gsap.fromTo(cardRef.current, { y: 40, opacity: 0, scale: 0.96 }, { y: 0, opacity: 1, scale: 1, duration: 0.5, ease: "power3.out" });
+    gsap.fromTo(backdropRef.current, { opacity: 0 }, { opacity: 1, duration: 0.25 });
+    gsap.fromTo(cardRef.current,
+      { y: 60, opacity: 0, scale: 0.92, rotateX: 4 },
+      { y: 0, opacity: 1, scale: 1, rotateX: 0, duration: 0.5, ease: "back.out(1.4)" }
+    );
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
     document.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
@@ -182,48 +164,67 @@ function ProductModal({ product, onClose }: { product: Product; onClose: () => v
   }, [onClose]);
 
   return (
-    <div ref={backdropRef} onClick={onClose} className="fixed inset-0 z-[100] bg-black/70 backdrop-blur-sm grid place-items-center p-4 overflow-y-auto">
-      <div ref={cardRef} onClick={(e) => e.stopPropagation()} className="relative w-full max-w-3xl rounded-3xl bg-card border shadow-elegant overflow-hidden my-8">
-        <button onClick={onClose} className="absolute top-4 right-4 z-10 grid h-10 w-10 place-items-center rounded-full bg-black/40 backdrop-blur text-white hover:bg-black/60">
-          <X className="h-4 w-4" />
-        </button>
-        <div className={`aspect-[16/10] bg-gradient-to-br ${product.gradient} relative grain`}>
-          <div className="absolute bottom-6 left-6 right-6 text-white">
-            <div className="text-xs uppercase tracking-widest opacity-80">{product.category}</div>
-            <div className="mt-2 font-serif italic text-5xl md:text-6xl">{product.name}</div>
+    <div ref={backdropRef} onClick={onClose} className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-md flex items-end sm:items-center justify-center p-3 sm:p-6">
+      <div
+        ref={cardRef}
+        onClick={(e) => e.stopPropagation()}
+        className="relative w-full max-w-md rounded-2xl sm:rounded-3xl bg-card border border-border/60 shadow-elegant overflow-hidden"
+        style={{ perspective: "800px" }}
+      >
+        {/* Compact header strip */}
+        <div className="h-36 sm:h-44 relative overflow-hidden flex-shrink-0">
+          <img src={product.image} alt={product.name} className="absolute inset-0 w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-black/40" />
+          <button
+            onClick={onClose}
+            className="absolute top-3 right-3 grid h-8 w-8 place-items-center rounded-full bg-black/30 backdrop-blur text-white hover:bg-black/50 transition z-10"
+          >
+            <X className="h-3.5 w-3.5" />
+          </button>
+          <div className="absolute inset-0 flex flex-col justify-end p-5 text-white pointer-events-none">
+            <div className="text-[10px] uppercase tracking-[0.2em] text-white/70 font-semibold">{product.category}</div>
+            <div className="mt-1 font-serif italic text-3xl leading-tight">{product.name}</div>
           </div>
         </div>
-        <div className="p-6 md:p-8">
-          <p className="text-muted-foreground">{product.description}</p>
-          <div className="mt-5 flex flex-wrap gap-1.5">
+
+        {/* Body */}
+        <div className="p-5">
+          <p className="text-sm text-muted-foreground leading-relaxed">{product.description}</p>
+
+          {/* Tags */}
+          <div className="mt-3 flex flex-wrap gap-1.5">
             {product.tags.map((t) => (
-              <span key={t} className="text-xs rounded-full bg-secondary px-3 py-1">{t}</span>
+              <span key={t} className="text-[10px] rounded-full bg-secondary px-2.5 py-0.5 font-medium">{t}</span>
             ))}
           </div>
-          <div className="mt-6 grid grid-cols-2 gap-4">
-            <div className="rounded-2xl border p-4">
-              <div className="text-xs uppercase tracking-widest text-muted-foreground">Produk Jadi</div>
-              <div className="mt-1 text-2xl font-bold">{formatIDR(product.priceJadi)}</div>
+
+          {/* Prices inline */}
+          <div className="mt-4 flex gap-3">
+            <div className="flex-1 rounded-xl bg-muted/50 px-4 py-3">
+              <div className="text-[10px] uppercase tracking-widest text-muted-foreground font-semibold">Produk Jadi</div>
+              <div className="mt-1 text-lg font-bold text-amber-500">{formatIDR(product.priceJadi)}</div>
             </div>
-            <div className="rounded-2xl border p-4">
-              <div className="text-xs uppercase tracking-widest text-muted-foreground">Source Code</div>
-              <div className="mt-1 text-2xl font-bold">{formatIDR(product.priceSource)}</div>
+            <div className="flex-1 rounded-xl bg-muted/50 px-4 py-3">
+              <div className="text-[10px] uppercase tracking-widest text-muted-foreground font-semibold">Source Code</div>
+              <div className="mt-1 text-lg font-bold text-amber-500">{formatIDR(product.priceSource)}</div>
             </div>
           </div>
-          <div className="mt-6 flex flex-col sm:flex-row gap-3">
+
+          {/* CTAs */}
+          <div className="mt-4 grid grid-cols-2 gap-2">
             <a
               href={waLink(`Halo Giestar, saya ingin BELI PRODUK JADI: ${product.name}`)}
               target="_blank" rel="noreferrer"
-              className="flex-1 inline-flex items-center justify-center gap-2 rounded-full bg-primary text-primary-foreground px-6 py-3.5 font-semibold hover:bg-primary/90"
+              className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-primary text-primary-foreground px-4 py-2.5 text-sm font-semibold hover:bg-primary/90 transition"
             >
-              <ShoppingBag className="h-4 w-4" /> Beli Product
+              <ShoppingBag className="h-3.5 w-3.5" /> Beli Jadi
             </a>
             <a
               href={waLink(`Halo Giestar, saya ingin BELI SOURCE CODE: ${product.name}`)}
               target="_blank" rel="noreferrer"
-              className="flex-1 inline-flex items-center justify-center gap-2 rounded-full bg-ink text-white px-6 py-3.5 font-semibold hover:opacity-90"
+              className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-ink text-white px-4 py-2.5 text-sm font-semibold hover:opacity-90 transition"
             >
-              <FileCode2 className="h-4 w-4" /> Beli Source Code
+              <FileCode2 className="h-3.5 w-3.5" /> Source Code
             </a>
           </div>
         </div>

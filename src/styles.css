@@ -34,7 +34,7 @@
   --color-ink: var(--ink);
   --color-surface: var(--surface);
   --font-display: "Instrument Serif", ui-serif, Georgia, serif;
-  --font-sans: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
 }
 
 :root {
@@ -109,5 +109,13 @@
     background-image: radial-gradient(oklch(1 0 0 / 0.06) 1px, transparent 1px);
     background-size: 3px 3px;
     mix-blend-mode: overlay;
+  }
+}
+
+@utility hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
   }
 }
