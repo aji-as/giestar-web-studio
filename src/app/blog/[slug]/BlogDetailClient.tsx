@@ -21,7 +21,7 @@ export default function BlogDetailClient({
 
   useEffect(() => {
     if (!hydrated) return;
-    let ctx: any;
+    let ctx: { revert: () => void } | undefined;
     (async () => {
       const { default: gsap } = await import("gsap");
       ctx = gsap.context(() => {

@@ -44,7 +44,7 @@ export default function Home() {
 
   useEffect(() => {
     if (!hydrated) return;
-    let ctx: any;
+    let ctx: { revert: () => void } | undefined;
     
     (async () => {
       const gsapModule = await import("gsap");

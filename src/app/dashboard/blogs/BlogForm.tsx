@@ -57,8 +57,8 @@ export default function BlogForm({
     setSaving(true);
     try {
       await onSave(form);
-    } catch (err: any) {
-      setError(err.message ?? "Terjadi kesalahan.");
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Terjadi kesalahan.");
     } finally {
       setSaving(false);
     }

@@ -20,8 +20,8 @@ export default function CategoriesPage() {
     try {
       await addCategory(newCatName.trim());
       setNewCatName("");
-    } catch (err: any) {
-      setError(err.message ?? "Gagal menambahkan kategori.");
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Gagal menambahkan kategori.");
     } finally {
       setSubmitting(false);
     }
@@ -39,8 +39,8 @@ export default function CategoriesPage() {
     try {
       await updateCategory(id, editName.trim());
       setEditingId(null);
-    } catch (err: any) {
-      setError(err.message ?? "Gagal mengubah kategori.");
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Gagal mengubah kategori.");
     } finally {
       setSubmitting(false);
     }
@@ -51,8 +51,8 @@ export default function CategoriesPage() {
     setError("");
     try {
       await deleteCategory(id);
-    } catch (err: any) {
-      setError(err.message ?? "Gagal menghapus kategori.");
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Gagal menghapus kategori.");
     }
   };
 
