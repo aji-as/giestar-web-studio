@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import Link from "next/link";
 
 export function Footer() {
   return (
@@ -7,17 +7,16 @@ export function Footer() {
         <div className="grid gap-10 md:grid-cols-[2fr_1fr_1fr_1fr]">
           <div>
             <div className="flex items-center gap-2 text-2xl font-bold">
-              <span className="grid h-10 w-10 place-items-center rounded-full bg-blue-gradient">G</span>
-              giestar<span className="text-primary-glow">.</span>
+              <img src="/logo.png" alt="Giestar Logo" className="h-8 w-auto object-contain brightness-0 invert" />
             </div>
             <p className="mt-4 max-w-xs text-white/60">Jasa pembuatan website profesional & template premium untuk UMKM, bisnis lokal, dan kreator yang ingin tampil beda secara online.</p>
           </div>
           <div>
             <div className="text-xs uppercase tracking-widest text-white/40">Navigasi</div>
             <ul className="mt-4 space-y-2">
-              <li><Link to="/" className="hover:text-primary-glow">Beranda</Link></li>
-              <li><Link to="/product" className="hover:text-primary-glow">Produk</Link></li>
-              <li><Link to="/blog" className="hover:text-primary-glow">Blog</Link></li>
+              <li><Link href="/" className="hover:text-primary-glow">Beranda</Link></li>
+              <li><Link href="/produk" className="hover:text-primary-glow">Produk</Link></li>
+              <li><Link href="/blog" className="hover:text-primary-glow">Blog</Link></li>
             </ul>
           </div>
           <div>

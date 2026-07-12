@@ -1,15 +1,14 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+"use client";
+
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ArrowRight, ArrowUpRight, MessageCircle, CreditCard, Rocket, CheckCircle2, Sparkles, MousePointerClick, FileCode2, ShoppingBag, X } from "lucide-react";
+import { ArrowRight, ArrowUpRight, MessageCircle, CreditCard, Rocket, CheckCircle2, Sparkles, MousePointerClick, FileCode2, ShoppingBag, X, ExternalLink } from "lucide-react";
 import { Nav } from "@/components/Nav";
 import { HeroWave } from "@/components/HeroWave";
 import { Footer } from "@/components/Footer";
-import { PRODUCTS, formatIDR, waLink, type Product } from "@/lib/data";
+import { formatIDR, waLink, type ProductRow } from "@/lib/supabase";
+import { useFeaturedProducts } from "@/lib/useProducts";
 import { useHydrated } from "@/hooks/useHydrated";
-
-export const Route = createFileRoute("/")({ component: Home });
 
 const STEPS = [
   { icon: MousePointerClick, title: "Pilih Template", desc: "Lihat-lihat koleksi template kami dan pilih yang paling cocok untuk bisnis Anda." },
@@ -33,123 +32,126 @@ const ROW_GRADIENTS = [
   "bg-gradient-to-r from-cyan-500 to-cyan-400",
 ];
 
-function Home() {
+export default function Home() {
   const hydrated = useHydrated();
   const rootRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
-  const [selected, setSelected] = useState<Product | null>(null);
+  const [selected, setSelected] = useState<ProductRow | null>(null);
   const [activeStep, setActiveStep] = useState<number | null>(0);
+  
+  const { products: featuredProducts, loading: loadingProducts } = useFeaturedProducts();
 
   useEffect(() => {
     if (!hydrated) return;
-    gsap.registerPlugin(ScrollTrigger);
-    const ctx = gsap.context(() => {
-      // page load (hero content)
-      gsap.from("[data-load]", {
-        y: 30,
-        opacity: 0,
-        duration: 0.9,
-        stagger: 0.08,
-        ease: "power3.out",
-      });
-
-      // Pinned hero: hero stays fixed while the next section (overlay) slides up over it
-      const hero = heroRef.current;
-      const overlay = overlayRef.current;
-      if (hero) {
-        ScrollTrigger.create({
-          trigger: hero,
-          start: "top top",
-          end: "+=100%",
-          pin: true,
-          pinSpacing: false, // let overlay section scroll up ON TOP of pinned hero
-          anticipatePin: 1,
+    let ctx: any;
+    
+    (async () => {
+      const gsapModule = await import("gsap");
+      const { ScrollTrigger } = await import("gsap/ScrollTrigger");
+      const gsap = gsapModule.default;
+      gsap.registerPlugin(ScrollTrigger);
+      
+      ctx = gsap.context(() => {
+        gsap.from("[data-load]", {
+          y: 30,
+          opacity: 0,
+          duration: 0.9,
+          stagger: 0.08,
+          ease: "power3.out",
         });
-        // Hero content gently scales & fades while pinned
-        gsap.to(hero.querySelector("[data-hero-inner]") ?? hero, {
-          scale: 0.92,
-          opacity: 0.55,
-          ease: "none",
-          scrollTrigger: {
+
+        const hero = heroRef.current;
+        const overlay = overlayRef.current;
+        if (hero) {
+          ScrollTrigger.create({
             trigger: hero,
             start: "top top",
             end: "+=100%",
-            scrub: true,
-          },
-        });
-      }
-      // Overlay section rises with a growing border-radius as the hero is pinned
-      if (overlay) {
-        gsap.fromTo(
-          overlay,
-          { borderTopLeftRadius: 0, borderTopRightRadius: 0 },
-          {
-            borderTopLeftRadius: 64,
-            borderTopRightRadius: 64,
+            pin: true,
+            pinSpacing: false,
+            anticipatePin: 1,
+          });
+          gsap.to(hero.querySelector("[data-hero-inner]") ?? hero, {
+            scale: 0.92,
+            opacity: 0.55,
             ease: "none",
             scrollTrigger: {
-              trigger: overlay,
-              start: "top bottom",
-              end: "top top",
+              trigger: hero,
+              start: "top top",
+              end: "+=100%",
               scrub: true,
             },
-          },
-        );
-      }
-
-      // Section reveals — use fromTo + once so elements never stay hidden
-      gsap.utils.toArray<HTMLElement>("[data-reveal]").forEach((el) => {
-        gsap.fromTo(
-          el,
-          { y: 40, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.9,
-            ease: "power3.out",
-            immediateRender: false,
-            scrollTrigger: {
-              trigger: el,
-              start: "top 90%",
-              once: true,
+          });
+        }
+        if (overlay) {
+          gsap.fromTo(
+            overlay,
+            { borderTopLeftRadius: 0, borderTopRightRadius: 0 },
+            {
+              borderTopLeftRadius: 64,
+              borderTopRightRadius: 64,
+              ease: "none",
+              scrollTrigger: {
+                trigger: overlay,
+                start: "top bottom",
+                end: "top top",
+                scrub: true,
+              },
             },
-          },
-        );
-      });
+          );
+        }
 
-      // Marquee
-      gsap.to(".marquee-track", { xPercent: -50, duration: 30, ease: "none", repeat: -1 });
+        gsap.utils.toArray<HTMLElement>("[data-reveal]").forEach((el) => {
+          gsap.fromTo(
+            el,
+            { y: 40, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              duration: 0.9,
+              ease: "power3.out",
+              immediateRender: false,
+              scrollTrigger: {
+                trigger: el,
+                start: "top 90%",
+                once: true,
+              },
+            },
+          );
+        });
 
-      // Step cards stagger
-      gsap.utils.toArray<HTMLElement>(".steps-grid").forEach((grid) => {
-        const cards = grid.querySelectorAll<HTMLElement>(".step-card");
-        gsap.fromTo(
-          cards,
-          { y: 30, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            stagger: 0.06,
-            duration: 0.7,
-            ease: "power3.out",
-            immediateRender: false,
-            scrollTrigger: { trigger: grid, start: "top 90%", once: true },
-          },
-        );
-      });
+        gsap.to(".marquee-track", { xPercent: -50, duration: 30, ease: "none", repeat: -1 });
 
-      // Refresh after fonts/images settle so triggers are correct
-      ScrollTrigger.refresh();
-      const onLoad = () => ScrollTrigger.refresh();
-      window.addEventListener("load", onLoad);
-      const t = setTimeout(() => ScrollTrigger.refresh(), 400);
-      return () => {
-        window.removeEventListener("load", onLoad);
-        clearTimeout(t);
-      };
-    }, rootRef);
-    return () => ctx.revert();
+        gsap.utils.toArray<HTMLElement>(".steps-grid").forEach((grid) => {
+          const cards = grid.querySelectorAll<HTMLElement>(".step-card");
+          gsap.fromTo(
+            cards,
+            { y: 30, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              stagger: 0.06,
+              duration: 0.7,
+              ease: "power3.out",
+              immediateRender: false,
+              scrollTrigger: { trigger: grid, start: "top 90%", once: true },
+            },
+          );
+        });
+
+        ScrollTrigger.refresh();
+        const onLoad = () => ScrollTrigger.refresh();
+        window.addEventListener("load", onLoad);
+        const t = setTimeout(() => ScrollTrigger.refresh(), 400);
+        return () => {
+          window.removeEventListener("load", onLoad);
+          clearTimeout(t);
+        };
+      }, rootRef);
+    })();
+    
+    return () => ctx?.revert();
   }, [hydrated]);
 
 
@@ -166,17 +168,17 @@ function Home() {
               <div>
                 
                 <h1 data-load className="text-balance text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-bold leading-[0.95] tracking-tight">
-                  Solusi terjangkau untuk website   
-                  <span className="font-serif italic text-yellow-300">  impian anda.</span>
+                  Jasa pembuatan website   
+                  <span className="font-serif italic text-yellow-300">  Pemalang & template premium.</span>
                 </h1>
               </div>
               <p data-load className="text-sm md:text-base text-white/70 max-w-sm md:justify-self-end">
-                Giestar menyediakan koleksi template website premium. Beli source code untuk di-develop sendiri, atau pilih paket website jadi (terima beres).
+                Giestar menyediakan jasa pembuatan website modern, terjangkau, dan responsif. Pilih paket website jadi terima beres, atau beli source code template premium langsung.
               </p>
             </div>
 
             <div data-load className="mt-10 flex flex-wrap items-center gap-4">
-              <Link to="/product" className="inline-flex items-center gap-2 rounded-full bg-white text-ink px-6 py-3 font-semibold hover:bg-white/90 transition">
+              <Link href="/produk" className="inline-flex items-center gap-2 rounded-full bg-white text-ink px-6 py-3 font-semibold hover:bg-white/90 transition">
                 Lihat Produk <ArrowRight className="h-4 w-4" />
               </Link>
               <a href="#how" className="inline-flex items-center gap-2 rounded-full border border-white/30 px-6 py-3 font-semibold hover:bg-white/10 transition">
@@ -192,11 +194,11 @@ function Home() {
         <div className="mx-auto max-w-7xl px-6 py-24 md:py-32">
           <div data-reveal className="grid gap-10 md:grid-cols-[1fr_1.5fr] items-end">
             <div>              <h2 className="mt-3 text-4xl md:text-5xl font-bold tracking-tight">
-                Solusi website terjangkau, <span className="font-serif">untuk bisnis</span> seluruh Indonesia.
+                Jasa website modern & <span className="font-serif">terjangkau</span> di Pemalang.
               </h2>
             </div>
             <p className="text-lg text-muted-foreground max-w-xl">
-              Kami menyediakan template website berkualitas. Dapatkan desain modern siap pakai dengan opsi beli source code atau instalasi terima beres untuk UMKM & profesional.
+              Kami menawarkan jasa pembuatan website Pemalang dengan desain website modern dan performa super cepat. Dapatkan pilihan template website terbaik untuk UMKM, bisnis lokal, dan profesional.
             </p>
           </div>
 
@@ -364,46 +366,54 @@ function Home() {
                 Template siap <span className="font-serif text-amber-500">langsung pakai</span>
               </h2>
             </div>
-            <Link to="/product" className="hidden sm:inline-flex items-center gap-2 rounded-full border px-5 py-2.5 font-semibold hover:bg-secondary">
+            <Link href="/produk" className="hidden sm:inline-flex items-center gap-2 rounded-full border px-5 py-2.5 font-semibold hover:bg-secondary">
               Lihat Semua Produk <ArrowUpRight className="h-4 w-4" />
             </Link>
           </div>
+          
           <div data-reveal className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-12 -mx-6 px-6 hide-scrollbar">
-            {PRODUCTS.slice(0, 6).map((p, i) => {
-              const blue = i % 3 === 1;
+            {loadingProducts ? (
+              [1, 2, 3].map((i) => (
+                <div key={i} className="shrink-0 w-[85vw] sm:w-[450px] aspect-square snap-center rounded-3xl bg-muted animate-pulse" />
+              ))
+            ) : featuredProducts.map((p) => {
               return (
                 <article
                   key={p.id}
-                  className="group relative shrink-0 w-[85vw] sm:w-[450px] aspect-square snap-center rounded-3xl overflow-hidden cursor-pointer shadow-card hover:shadow-elegant transition"
+                  className="group relative shrink-0 w-[85vw] sm:w-[450px] aspect-[16/10] snap-center rounded-3xl overflow-hidden cursor-pointer shadow-card hover:shadow-elegant transition"
                   onClick={() => setSelected(p)}
                 >
-                  <img src={p.image} alt={p.name} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                  {p.image ? (
+                    <img src={p.image} alt={p.name} className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-103" />
+                  ) : (
+                    <div className={`absolute inset-0 bg-gradient-to-br ${p.gradient}`} />
+                  )}
                   <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-500" />
                   
                   {/* Default State */}
                   <div className="absolute inset-0 p-8 flex flex-col justify-between">
                     <div className="flex items-start justify-between relative z-10">
                       <span className="rounded-full bg-black/40 backdrop-blur text-white text-[11px] uppercase tracking-widest px-4 py-2">{p.category}</span>
-                      <span className="text-xs font-semibold text-white uppercase tracking-widest drop-shadow-md">2026</span>
+                      <span className="text-xs font-semibold text-white uppercase tracking-widest drop-shadow-md">{new Date(p.created_at).getFullYear()}</span>
                     </div>
                   </div>
 
                   {/* Hover Overlay */}
-                  <div className="absolute inset-x-0 bottom-0 p-8 pt-20 bg-gradient-to-t from-black/90 via-black/60 to-transparent flex flex-col justify-end translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                  <div className="absolute inset-x-0 bottom-0 p-6 pt-16 bg-gradient-to-t from-black/95 via-black/70 to-transparent flex flex-col justify-end translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
                      <div className="flex items-center justify-between text-white">
-                       <span className="text-2xl font-bold text-yellow-300">{formatIDR(p.priceJadi)}</span>
+                       <span className="text-xl font-bold text-yellow-300">{formatIDR(p.price_jadi)}</span>
                      </div>
-                     <p className="mt-2 text-sm text-white/80 line-clamp-2">{p.description}</p>
-                     <div className="mt-4 flex flex-wrap gap-2">
+                     <p className="mt-1.5 text-xs text-white/80 line-clamp-2 leading-snug">{p.description}</p>
+                     <div className="mt-3 flex flex-wrap gap-1.5">
                        {p.tags.slice(0, 3).map((t) => (
-                         <span key={t} className="text-[11px] rounded-full px-3 py-1 bg-white/20 text-white backdrop-blur">{t}</span>
+                         <span key={t} className="text-[10px] rounded-full px-2.5 py-0.5 bg-white/20 text-white backdrop-blur">{t}</span>
                        ))}
                      </div>
                   </div>
 
                   {/* Floating Action Button */}
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 bg-white text-ink rounded-full flex items-center justify-center scale-0 group-hover:scale-100 transition-transform duration-500 shadow-xl pointer-events-none z-10">
-                     <ArrowUpRight className="h-8 w-8" />
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-white/20 border border-white/20 backdrop-blur-md text-white rounded-full flex items-center justify-center scale-0 group-hover:scale-100 transition-transform duration-500 shadow-xl pointer-events-none z-10">
+                     <ArrowUpRight className="h-5 w-5" />
                   </div>
                 </article>
               );
@@ -488,15 +498,18 @@ function Home() {
   );
 }
 
-function HomeProductModal({ product, onClose }: { product: Product; onClose: () => void }) {
+function HomeProductModal({ product, onClose }: { product: ProductRow; onClose: () => void }) {
   const backdropRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    gsap.fromTo(backdropRef.current, { opacity: 0 }, { opacity: 1, duration: 0.25 });
-    gsap.fromTo(cardRef.current,
-      { y: 60, opacity: 0, scale: 0.92, rotateX: 4 },
-      { y: 0, opacity: 1, scale: 1, rotateX: 0, duration: 0.5, ease: "back.out(1.4)" }
-    );
+    (async () => {
+      const { default: gsap } = await import("gsap");
+      gsap.fromTo(backdropRef.current, { opacity: 0 }, { opacity: 1, duration: 0.25 });
+      gsap.fromTo(cardRef.current,
+        { y: 60, opacity: 0, scale: 0.92, rotateX: 4 },
+        { y: 0, opacity: 1, scale: 1, rotateX: 0, duration: 0.5, ease: "back.out(1.4)" }
+      );
+    })();
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
     document.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
@@ -516,7 +529,11 @@ function HomeProductModal({ product, onClose }: { product: Product; onClose: () 
       >
         {/* Compact header */}
         <div className="h-36 sm:h-44 relative overflow-hidden">
-          <img src={product.image} alt={product.name} className="absolute inset-0 w-full h-full object-cover" />
+          {product.image ? (
+            <img src={product.image} alt={product.name} className="absolute inset-0 w-full h-full object-cover" />
+          ) : (
+            <div className={`absolute inset-0 bg-gradient-to-br ${product.gradient}`} />
+          )}
           <div className="absolute inset-0 bg-black/40" />
           <button
             onClick={onClose}
@@ -540,16 +557,25 @@ function HomeProductModal({ product, onClose }: { product: Product; onClose: () 
               <span key={t} className="text-[10px] rounded-full bg-secondary px-2.5 py-0.5 font-medium">{t}</span>
             ))}
           </div>
+          
+          {/* Demo Link */}
+          {product.demo_url && (
+            <div className="mt-4">
+              <a href={product.demo_url} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:underline">
+                <ExternalLink className="h-4 w-4" /> Lihat Demo Website
+              </a>
+            </div>
+          )}
 
           {/* Prices inline */}
           <div className="mt-4 flex gap-3">
             <div className="flex-1 rounded-xl bg-muted/50 px-4 py-3">
               <div className="text-[10px] uppercase tracking-widest text-muted-foreground font-semibold">Produk Jadi</div>
-              <div className="mt-1 text-lg font-bold text-amber-500">{formatIDR(product.priceJadi)}</div>
+              <div className="mt-1 text-lg font-bold text-amber-500">{formatIDR(product.price_jadi)}</div>
             </div>
             <div className="flex-1 rounded-xl bg-muted/50 px-4 py-3">
               <div className="text-[10px] uppercase tracking-widest text-muted-foreground font-semibold">Source Code</div>
-              <div className="mt-1 text-lg font-bold text-amber-500">{formatIDR(product.priceSource)}</div>
+              <div className="mt-1 text-lg font-bold text-amber-500">{formatIDR(product.price_source)}</div>
             </div>
           </div>
 
