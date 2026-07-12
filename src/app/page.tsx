@@ -168,8 +168,8 @@ export default function Home() {
               <div>
                 
                 <h1 data-load className="text-balance text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-bold leading-[0.95] tracking-tight">
-                  Jasa pembuatan website   
-                  <span className="font-serif italic text-yellow-300">  Pemalang & template premium.</span>
+                  Solusi terjangkau
+                  <span className="font-serif italic text-yellow-300"> untuk website impian anda </span>
                 </h1>
               </div>
               <p data-load className="text-sm md:text-base text-white/70 max-w-sm md:justify-self-end">
