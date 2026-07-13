@@ -170,7 +170,7 @@ export default function HomeClient({ featuredProducts }: { featuredProducts: Pro
                 </h1>
               </div>
               <p data-load className="text-sm md:text-base text-white/70 max-w-sm md:justify-self-end">
-                Giestar website modern, terjangkau, dan responsif. Pilih paket website jadi terima beres, atau beli source code template premium langsung.
+                Giestar menyediakan website modern, terjangkau, dan responsif. Pilih paket website jadi terima beres, atau beli source code template premium langsung.
               </p>
             </div>
 
