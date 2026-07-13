@@ -170,7 +170,7 @@ export default function HomeClient({ featuredProducts }: { featuredProducts: Pro
                 </h1>
               </div>
               <p data-load className="text-sm md:text-base text-white/70 max-w-sm md:justify-self-end">
-                Giestar menyediakan website modern, terjangkau, dan responsif. Pilih paket website jadi terima beres, atau beli source code template premium langsung.
+                Giestar menyediakan website modern, terjangkau, dan responsif. Pilih paket website jadi terima beres, atau beli source code template langsung.
               </p>
             </div>
 
@@ -244,7 +244,7 @@ export default function HomeClient({ featuredProducts }: { featuredProducts: Pro
                 </h2>
               </div>
               <p className="text-white/70 max-w-md md:justify-self-end">
-                Template modern berkualitas premium yang dirancang khusus untuk meningkatkan nilai jual. Beli kodenya atau biarkan kami siapkan semuanya sampai live.
+                Template modern berkualitas yang dirancang untuk meningkatkan nilai jual. Beli kodenya atau biarkan kami siapkan semuanya sampai live.
               </p>
             </div>
 
