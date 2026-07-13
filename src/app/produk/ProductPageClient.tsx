@@ -95,7 +95,7 @@ export default function ProductPageClient({
             <span className="h-1.5 w-1.5 rounded-full bg-yellow-400 animate-pulse" /> Katalog Produk
           </div>
           <h1 data-load className="mt-5 text-5xl md:text-7xl font-bold tracking-tight text-balance max-w-4xl leading-[0.95]">
-            Temukan <span className="font-serif italic text-yellow-300">website</span>,yanga sesui untuk bisnis & UMKM Anda.
+            Temukan <span className="font-serif italic text-yellow-300">website</span>,yang sesui untuk bisnismu.
           </h1>
           <p data-load className="mt-5 text-white/70 max-w-xl">Pilih template sesuai kategori atau cari berdasarkan nama. Klik kartu untuk melihat detail dan harga.</p>
 
