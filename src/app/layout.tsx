@@ -22,11 +22,11 @@ const serif = Instrument_Serif({
 export const metadata: Metadata = {
   metadataBase: new URL("https://giestar.web.id"),
   title: {
-    default: "Giestar — Jasa Pembuatan Website Pemalang & Template Premium",
+    default: "Giestar — Jasa Pembuatan Website Pemalang & Template",
     template: "%s — Giestar",
   },
   description:
-    "Jasa pembuatan website Pemalang profesional & template website modern terjangkau. Beli produk website jadi atau source code premium dengan harga transparan.",
+    "Jasa pembuatan website Pemalang profesional & template website modern terjangkau. Beli produk website jadi atau source code dengan harga transparan.",
   keywords: [
     "jasa pembuatan website pemalang",
     "jasa website pemalang",
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Giestar — Jasa Pembuatan Website Pemalang & Template Premium",
     description:
-      "Beli template website modern siap pakai atau pesan jasa pembuatan website premium di Pemalang. Harga transparan, pengerjaan cepat.",
+      "Beli template website modern siap pakai atau pesan jasa pembuatan website profesional di Pemalang. Harga transparan, pengerjaan cepat.",
     url: "https://giestar.web.id",
     siteName: "Giestar Web Studio",
     locale: "id_ID",
@@ -106,14 +106,14 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="id" className={`scroll-smooth ${sans.variable} ${serif.variable}`}>
+    <html lang="id" className={`scroll-smooth ${sans.variable} ${serif.variable}`} suppressHydrationWarning>
       <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body>{children}</body>
+      <body suppressHydrationWarning>{children}</body>
     </html>
   );
 }
