@@ -164,7 +164,7 @@ export default function HomeClient({ featuredProducts }: { featuredProducts: Pro
             <div className="grid gap-8 md:grid-cols-[1.4fr_1fr] items-center">
               <div>
 
-                <h1 data-load className="text-balance text-4xl sm:text-6xl md:text-6xl lg:text-[5rem] font-bold leading-[0.95] tracking-tight">
+                <h1 data-load className="text-balance text-5xl sm:text-6xl md:text-6xl lg:text-[5rem] font-bold leading-[0.95] tracking-tight">
                   Solusi terjangkau
                   <span className="font-serif italic text-yellow-300"> untuk website impianmu </span>
                 </h1>
@@ -224,6 +224,7 @@ export default function HomeClient({ featuredProducts }: { featuredProducts: Pro
                     key={slug + k}
                     src={`https://cdn.simpleicons.org/${slug}`}
                     alt={slug}
+                    loading="lazy"
                     className={`h-10 md:h-12 w-auto opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0 ${
                       slug === "nextdotjs" ? "dark:invert" : ""
                     }`}
@@ -377,7 +378,7 @@ export default function HomeClient({ featuredProducts }: { featuredProducts: Pro
                   onClick={() => setSelected(p)}
                 >
                   {p.image ? (
-                    <img src={p.image} alt={p.name} className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-103" />
+                    <img src={p.image} alt={p.name} loading="lazy" className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-103" />
                   ) : (
                     <div className={`absolute inset-0 bg-gradient-to-br ${p.gradient}`} />
                   )}
@@ -425,10 +426,11 @@ export default function HomeClient({ featuredProducts }: { featuredProducts: Pro
               </h2>
               <p className="mt-4 text-white/60 text-lg">Pilih sesuai kebutuhan. Mau langsung pakai atau ingin kembangkan sendiri? Keduanya tersedia dengan harga yang jelas di awal.</p>
             </div>
-            <div data-reveal className="mt-14 grid gap-6 md:grid-cols-2">
+            <div data-reveal className="mt-14 grid gap-6 md:grid-cols-3">
               {[
-                { name: "Produk Jadi", price: "Mulai 15K", desc: "Template sudah kami setup lengkap. Tinggal masukkan konten bisnis Anda, langsung bisa online.", features: ["Setup domain & hosting", "Konten diisi sesuai data Anda", "Revisi minor 2x", "Garansi 7 hari"], cta: "Jelajahi produk", href: "/produk" },
+                { name: "Produk Jadi", price: "Mulai 15K", desc: "Template sudah kami setup lengkap. Tinggal masukkan konten bisnis Anda, langsung bisa online.", features: ["Setup domain & hosting", "Konten diisi sesuai data Anda", "Revisi minor 1x", "Garansi 7 hari"], cta: "Jelajahi produk", href: "/produk" },
                 { name: "Source Code", price: "Mulai  5k", desc: "Dapatkan akses penuh ke source code. Bebas modifikasi dan kembangkan sesuai kebutuhan Anda.", features: ["Full source code terstruktur", "Dokumentasi penggunaan",  "Lisensi 1 project"], cta: "Tanya Source Code", href: "/produk", featured: true },
+                { name: "Website Custom", price: "Mulai 50K", desc: "Website dibuat sesuai kebutuhan Anda dari nol. Desain dan fitur menyesuaikan bisnis Anda.", features: ["Setup hosting & domain", "Revisi 2x", "Garansi 7 hari"], cta: "Konsultasi Custom", href: waLink("Halo Giestar, saya ingin konsultasi WEBSITE CUSTOM.") },
               ].map((t) => (
                 <div key={t.name} className={`rounded-3xl p-8 md:p-10 border ${t.featured ? "bg-yellow-500 border-transparent" : "border-white/10 bg-white/5"}`}>
                   <div className="flex items-center justify-between">

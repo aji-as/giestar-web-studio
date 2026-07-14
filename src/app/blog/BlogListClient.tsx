@@ -30,9 +30,7 @@ export default function BlogListClient({ blogs }: { blogs: BlogRow[] }) {
 
       <HeroWave>
         <div className="mx-auto max-w-7xl px-6 pt-32 pb-16">
-          <div data-load className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-[11px] uppercase tracking-[0.2em] backdrop-blur">
-            <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse" /> Journal
-          </div>
+      
           <h1 data-load className="mt-5 text-5xl md:text-7xl font-bold tracking-tight text-balance max-w-4xl leading-[0.95]">
             Catatan tentang <span className="font-serif italic">craft</span>, teknologi, dan UI.
           </h1>

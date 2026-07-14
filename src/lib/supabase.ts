@@ -84,6 +84,6 @@ export const formatIDR = (n: number) =>
     maximumFractionDigits: 0,
   }).format(n);
 
-export const WA_NUMBER = "6281234567890";
+export const WA_NUMBER = "6285150727624";
 export const waLink = (msg: string) =>
   `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;

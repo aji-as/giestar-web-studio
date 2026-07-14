@@ -6,6 +6,7 @@ node_modules
 .next/
 out/
 build/
+*.tsbuildinfo
 
 # production / local env files
 .env*.local

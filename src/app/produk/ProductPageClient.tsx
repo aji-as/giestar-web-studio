@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Search, X, ArrowUpRight, ShoppingBag, FileCode2, ExternalLink, ChevronDown } from "lucide-react";
+import { Search, X, ArrowUpRight, ShoppingBag, FileCode2, ExternalLink, ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
 import { Nav } from "@/components/Nav";
 import { HeroWave } from "@/components/HeroWave";
 import { Footer } from "@/components/Footer";
-import { formatIDR, waLink, type ProductRow, type CategoryRow, supabase } from "@/lib/supabase";
+import { formatIDR, waLink, type ProductRow, type CategoryRow } from "@/lib/supabase";
 import { useHydrated } from "@/hooks/useHydrated";
 
 export default function ProductPageClient({
@@ -18,56 +18,53 @@ export default function ProductPageClient({
   const hydrated = useHydrated();
   const [q, setQ] = useState("");
   const [cat, setCat] = useState<string>("All");
+  const [sort, setSort] = useState<"default" | "price-asc" | "price-desc">("default");
   const [selected, setSelected] = useState<ProductRow | null>(null);
-  const [dbProducts, setDbProducts] = useState<ProductRow[]>(initialProducts);
-  const [loadingProducts, setLoadingProducts] = useState(false);
+  const [page, setPage] = useState(1);
   const rootRef = useRef<HTMLDivElement>(null);
-  // Lewati fetch pertama: data awal sudah dari server (q="" & cat="All"), tak perlu di-refetch.
-  const isFirstRun = useRef(true);
+
+  const PAGE_SIZE = 9;
 
   const categories = useMemo(() => {
     return ["All", ...initialCategories.map((c) => c.name)];
   }, [initialCategories]);
 
+  // Pencarian & filter dilakukan langsung di memori dari data yang sudah dimuat server.
+  // Instan, tanpa round-trip ke Supabase pada tiap ketikan. Pencarian utamanya berdasarkan
+  // nama template (juga mencakup kategori, deskripsi, dan tag). Query multi-kata → semua
+  // kata harus cocok (AND).
+  const filteredProducts = useMemo(() => {
+    const tokens = q.trim().toLowerCase().split(/\s+/).filter(Boolean);
+    return initialProducts.filter((p) => {
+      if (cat !== "All" && p.category !== cat) return false;
+      if (tokens.length === 0) return true;
+      const haystack = `${p.name} ${p.category} ${p.description} ${p.tags.join(" ")}`.toLowerCase();
+      return tokens.every((t) => haystack.includes(t));
+    });
+  }, [initialProducts, q, cat]);
+
+  // Urutkan hasil filter berdasarkan harga (price_jadi). useMemo terpisah agar
+  // pengurutan tidak memicu filter dihitung ulang, dan sebaliknya. Semua di memori.
+  const sortedProducts = useMemo(() => {
+    if (sort === "default") return filteredProducts;
+    const arr = [...filteredProducts];
+    arr.sort((a, b) =>
+      sort === "price-asc" ? a.price_jadi - b.price_jadi : b.price_jadi - a.price_jadi,
+    );
+    return arr;
+  }, [filteredProducts, sort]);
+
+  // Reset ke halaman pertama tiap kali pencarian, kategori, atau urutan berubah agar
+  // hasil yang tampil selalu dari awal.
   useEffect(() => {
-    if (isFirstRun.current) {
-      isFirstRun.current = false;
-      return;
-    }
+    setPage(1);
+  }, [q, cat, sort]);
 
-    let active = true;
-    const fetchFiltered = async () => {
-      setLoadingProducts(true);
-      let query = supabase
-        .from("products")
-        .select("*")
-        .eq("status", "active")
-        .order("created_at", { ascending: false });
-
-      if (cat !== "All") {
-        query = query.eq("category", cat);
-      }
-
-      if (q.trim()) {
-        query = query.or(`name.ilike.%${q}%,description.ilike.%${q}%`);
-      }
-
-      const { data } = await query;
-      if (active) {
-        setDbProducts(data ?? []);
-        setLoadingProducts(false);
-      }
-    };
-
-    const timer = setTimeout(() => {
-      fetchFiltered();
-    }, 250);
-
-    return () => {
-      active = false;
-      clearTimeout(timer);
-    };
-  }, [q, cat]);
+  const totalPages = Math.max(1, Math.ceil(sortedProducts.length / PAGE_SIZE));
+  const pagedProducts = useMemo(
+    () => sortedProducts.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE),
+    [sortedProducts, page],
+  );
 
   useEffect(() => {
     if (!hydrated) return;
@@ -77,13 +74,15 @@ export default function ProductPageClient({
     })();
   }, [hydrated]);
 
+  // Animasikan kartu saat mount & pergantian kategori. Ketikan pencarian sengaja tidak
+  // memicu ulang animasi agar hasil terasa instan dan tidak berkedip.
   useEffect(() => {
-    if (!hydrated || loadingProducts) return;
+    if (!hydrated) return;
     (async () => {
       const { default: gsap } = await import("gsap");
       gsap.fromTo(".prod-card", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, stagger: 0.04, ease: "power2.out" });
     })();
-  }, [dbProducts, hydrated, loadingProducts]);
+  }, [cat, page, sort, hydrated]);
 
   return (
     <div ref={rootRef} className="min-h-screen bg-background">
@@ -91,9 +90,7 @@ export default function ProductPageClient({
 
       <HeroWave>
         <div className="mx-auto max-w-7xl px-6 pt-32 pb-20">
-          <div data-load className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-[11px] uppercase tracking-[0.2em] backdrop-blur">
-            <span className="h-1.5 w-1.5 rounded-full bg-yellow-400 animate-pulse" /> Katalog Produk
-          </div>
+          
           <h1 data-load className="mt-5 text-5xl md:text-7xl font-bold tracking-tight text-balance max-w-4xl leading-[0.95]">
             Temukan <span className="font-serif italic text-yellow-300">website</span>,yang sesui untuk bisnismu.
           </h1>
@@ -126,29 +123,38 @@ export default function ProductPageClient({
                 <ChevronDown className="h-4 w-4" />
               </div>
             </div>
+
+            <div className="relative min-w-[200px]">
+              <select
+                value={sort}
+                onChange={(e) => setSort(e.target.value as typeof sort)}
+                className="w-full appearance-none rounded-full bg-white/10 border border-white/20 pl-6 pr-10 py-3.5 text-sm font-medium text-white outline-none focus:border-white transition backdrop-blur cursor-pointer"
+              >
+                <option value="default" className="bg-slate-950 text-white">Urutkan Harga</option>
+                <option value="price-asc" className="bg-slate-950 text-white">Harga Terendah</option>
+                <option value="price-desc" className="bg-slate-950 text-white">Harga Tertinggi</option>
+              </select>
+              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-white/60">
+                <ChevronDown className="h-4 w-4" />
+              </div>
+            </div>
           </div>
         </div>
       </HeroWave>
 
       <section className="mx-auto max-w-7xl px-6 py-16">
         <div className="text-sm text-muted-foreground mb-6">
-          {loadingProducts ? "Memuat produk..." : `${dbProducts.length} template ditemukan`}
+          {`${filteredProducts.length} template ditemukan`}
         </div>
 
-        {loadingProducts ? (
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="aspect-[16/10] rounded-3xl bg-muted animate-pulse" />
-            ))}
-          </div>
-        ) : dbProducts.length === 0 ? (
+        {filteredProducts.length === 0 ? (
           <div className="rounded-3xl border p-16 text-center">
             <div className="text-2xl font-bold">Tidak ada yang cocok</div>
             <p className="mt-2 text-muted-foreground">Coba kata kunci atau kategori lain.</p>
           </div>
         ) : (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {dbProducts.map((p) => {
+            {pagedProducts.map((p) => {
               return (
                 <article
                   key={p.id}
@@ -156,7 +162,7 @@ export default function ProductPageClient({
                   onClick={() => setSelected(p)}
                 >
                   {p.image ? (
-                    <img src={p.image} alt={p.name} className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-103" />
+                    <img src={p.image} alt={p.name} loading="lazy" className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-103" />
                   ) : (
                     <div className={`absolute inset-0 bg-gradient-to-br ${p.gradient}`} />
                   )}
@@ -190,6 +196,42 @@ export default function ProductPageClient({
                 </article>
               );
             })}
+          </div>
+        )}
+
+        {/* Pagination */}
+        {filteredProducts.length > 0 && totalPages > 1 && (
+          <div className="mt-12 flex items-center justify-center gap-2">
+            <button
+              onClick={() => setPage((p) => Math.max(1, p - 1))}
+              disabled={page === 1}
+              className="grid h-10 w-10 place-items-center rounded-full border transition hover:bg-secondary disabled:opacity-40 disabled:pointer-events-none"
+              aria-label="Halaman sebelumnya"
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </button>
+            {Array.from({ length: totalPages }).map((_, i) => {
+              const n = i + 1;
+              return (
+                <button
+                  key={n}
+                  onClick={() => setPage(n)}
+                  className={`grid h-10 w-10 place-items-center rounded-full border text-sm font-semibold transition ${
+                    n === page ? "bg-ink text-white border-transparent" : "hover:bg-secondary"
+                  }`}
+                >
+                  {n}
+                </button>
+              );
+            })}
+            <button
+              onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+              disabled={page === totalPages}
+              className="grid h-10 w-10 place-items-center rounded-full border transition hover:bg-secondary disabled:opacity-40 disabled:pointer-events-none"
+              aria-label="Halaman berikutnya"
+            >
+              <ChevronRight className="h-4 w-4" />
+            </button>
           </div>
         )}
       </section>
