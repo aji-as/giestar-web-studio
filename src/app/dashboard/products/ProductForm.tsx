@@ -11,7 +11,7 @@ type FormData = Omit<ProductRow, "id" | "created_at">;
 
 const DEFAULT = (defaultCat = "Landing"): FormData => ({
   name: "", category: defaultCat, price_jadi: 0, price_source: 0,
-  description: "", image: "", demo_url: "", tags: [],
+  description: "", image: "", demo_url: "", source_code_url: "", tags: [],
   gradient: GRADIENT_OPTIONS[0], featured: false, status: "active",
 });
 
@@ -29,7 +29,7 @@ export default function ProductForm({
   const [form, setForm] = useState<FormData>(product ? {
     name: product.name, category: product.category, price_jadi: product.price_jadi,
     price_source: product.price_source, description: product.description, image: product.image || "",
-    demo_url: product.demo_url, tags: product.tags, gradient: product.gradient,
+    demo_url: product.demo_url, source_code_url: product.source_code_url || "", tags: product.tags, gradient: product.gradient,
     featured: product.featured, status: product.status,
   } : DEFAULT());
   
@@ -133,6 +133,11 @@ export default function ProductForm({
           {/* URL Demo */}
           <Field label="URL Demo Live" hint="Link website demo yang sudah di-hosting">
             <input className={inputCls} value={form.demo_url} onChange={(e) => set("demo_url", e.target.value)} placeholder="https://demo.giestar.id/aurora" />
+          </Field>
+
+          {/* URL Source Code */}
+          <Field label="URL Source Code" hint="Link untuk mengunduh/membeli source code">
+            <input className={inputCls} value={form.source_code_url} onChange={(e) => set("source_code_url", e.target.value)} placeholder="https://gumroad.com/l/xxx" />
           </Field>
 
           {/* Tags */}

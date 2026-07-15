@@ -23,6 +23,7 @@ export type ProductRow = {
   description: string;
   image: string;
   demo_url: string;
+  source_code_url: string;
   tags: string[];
   gradient: string;
   featured: boolean;
@@ -85,5 +86,4 @@ export const formatIDR = (n: number) =>
   }).format(n);
 
 export const WA_NUMBER = "6285150727624";
-export const waLink = (msg: string) =>
-  `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
+export const waLink = (msg: string) => `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;

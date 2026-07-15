@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS products (
   description text            NOT NULL DEFAULT '',
   image       text            NOT NULL DEFAULT '',
   demo_url    text            NOT NULL DEFAULT '',
+  source_code_url text        NOT NULL DEFAULT '',
   tags        text[]          NOT NULL DEFAULT '{}',
   gradient    text            NOT NULL DEFAULT 'from-indigo-600 via-blue-500 to-cyan-400',
   featured    boolean         NOT NULL DEFAULT false,

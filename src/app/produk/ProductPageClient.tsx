@@ -245,6 +245,8 @@ export default function ProductPageClient({
 function ProductModal({ product, onClose }: { product: ProductRow; onClose: () => void }) {
   const backdropRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
+  
+  console.log("Debug - Product URL:", product.source_code_url);
 
   useEffect(() => {
     (async () => {
@@ -334,7 +336,7 @@ function ProductModal({ product, onClose }: { product: ProductRow; onClose: () =
               <ShoppingBag className="h-3.5 w-3.5" /> Beli Jadi
             </a>
             <a
-              href={waLink(`Halo Giestar, saya ingin BELI SOURCE CODE: ${product.name}`)}
+              href={(product.source_code_url && product.source_code_url.trim().length > 0) ? product.source_code_url : waLink(`Halo Giestar, saya ingin BELI SOURCE CODE: ${product.name}`)}
               target="_blank" rel="noreferrer"
               className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-ink text-white px-4 py-2 text-sm font-semibold hover:opacity-90 transition"
             >
