@@ -357,14 +357,14 @@ export default function HomeClient({ featuredProducts }: { featuredProducts: Pro
 
         {/* PRODUCTS preview */}
         <div id="products" className="mx-auto max-w-7xl px-6 py-24 md:py-32">
-          <div data-reveal className="flex items-end justify-between gap-6 mb-12">
+          <div data-reveal className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-12">
             <div>
               <div className="text-xs uppercase tracking-widest text-amber-500 font-semibold">Produk Unggulan</div>
               <h2 className="mt-3 text-4xl md:text-6xl font-bold tracking-tight">
                 Temukan desainmu <span className="font-serif text-amber-500">di sini!</span>
               </h2>
             </div>
-            <Link href="/produk" className="hidden sm:inline-flex items-center gap-2 rounded-full border px-5 py-2.5 font-semibold hover:bg-secondary">
+            <Link href="/produk" className="inline-flex items-center gap-2 rounded-full border px-5 py-2.5 font-semibold hover:bg-secondary self-start sm:self-auto">
               Lihat Semua Produk <ArrowUpRight className="h-4 w-4" />
             </Link>
           </div>
