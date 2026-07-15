@@ -412,6 +412,18 @@ export default function HomeClient({ featuredProducts }: { featuredProducts: Pro
                 </article>
               );
             })}
+            
+            {/* View All Card */}
+            {/* <Link
+              href="/produk"
+              className="group relative shrink-0 w-[85vw] sm:w-[450px] aspect-[16/10] snap-center rounded-3xl overflow-hidden cursor-pointer shadow-card hover:shadow-elegant transition bg-secondary/30 flex flex-col items-center justify-center border border-border/50 hover:bg-secondary/50"
+            >
+              <div className="grid h-16 w-16 place-items-center rounded-full bg-primary text-primary-foreground transition-transform duration-500 group-hover:scale-110 shadow-lg">
+                <ArrowRight className="h-8 w-8" />
+              </div>
+              <h3 className="mt-5 text-xl font-bold text-foreground">Lihat Semua Template</h3>
+              <p className="mt-2 text-sm text-muted-foreground text-center px-6">Jelajahi puluhan koleksi desain website premium kami.</p>
+            </Link> */}
           </div>
         </div>
         {selected && <HomeProductModal product={selected} onClose={() => setSelected(null)} />}
