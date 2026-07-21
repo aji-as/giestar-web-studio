@@ -395,7 +395,7 @@ export default function HomeClient({ featuredProducts }: { featuredProducts: Pro
                   {/* Hover Overlay */}
                   <div className="absolute inset-x-0 bottom-0 p-6 pt-16 bg-gradient-to-t from-black/95 via-black/70 to-transparent flex flex-col justify-end translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
                      <div className="flex items-center justify-between text-white">
-                       <span className="text-xl font-bold text-yellow-300">{formatIDR(p.price_jadi)}</span>
+                       <span className="text-xl font-bold text-yellow-300">{formatIDR(p.price_source)}</span>
                      </div>
                      <p className="mt-1.5 text-xs text-white/80 line-clamp-2 leading-snug">{p.description}</p>
                      <div className="mt-3 flex flex-wrap gap-1.5">

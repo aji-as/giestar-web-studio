@@ -22,7 +22,7 @@ const serif = Instrument_Serif({
 export const metadata: Metadata = {
   metadataBase: new URL("https://giestar.web.id"),
   title: {
-    default: "Giestar — Jasa Pembuatan Website Pemalang & Template",
+    default: "Giestar | Temukan website terbaikmu",
     template: "%s — Giestar",
   },
   description:
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   openGraph: {
-    title: "Giestar — Jasa Pembuatan Website Pemalang & Template Premium",
+    title: "Giestar | Temukan website terbaikmu ",
     description:
       "Beli template website modern siap pakai atau pesan jasa pembuatan website profesional di Pemalang. Harga transparan, pengerjaan cepat.",
     url: "https://giestar.web.id",
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Giestar — Jasa Pembuatan Website Pemalang & Template Premium",
+    title: "Giestar | Temukan website terbaikmu ",
     description: "Jasa pembuatan website Pemalang profesional & template website modern terjangkau.",
   },
 };
